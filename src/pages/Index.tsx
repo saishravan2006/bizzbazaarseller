@@ -293,7 +293,7 @@ const FirstPage: React.FC = () => {
                 "Grow your business with Bizz Bazaar."
               ]}
               as="h1"
-              id="app-title"
+              aria-labelledby="app-title"
               className="text-2xl sm:text-3xl md:text-4xl font-title font-semibold text-foreground tracking-tight leading-tight max-w-[20ch] mx-auto"
               typingSpeed={80}
               initialDelay={1000}
