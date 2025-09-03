@@ -1,0 +1,316 @@
+@import '@fontsource/manrope/200.css';
+@import '@fontsource/manrope/300.css';
+@import '@fontsource/manrope/400.css';
+@import '@fontsource/manrope/500.css';
+@import '@fontsource/manrope/600.css';
+@import '@fontsource/manrope/700.css';
+@import '@fontsource/manrope/800.css';
+
+@import '@fontsource/inter/100.css';
+@import '@fontsource/inter/200.css';
+@import '@fontsource/inter/300.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/inter/800.css';
+@import '@fontsource/inter/900.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Bizz Bazaar Design System — derived from reference image */
+    /* Neutrals */
+    --background: 0 0% 98%;        /* subtle off-white app background */
+    --foreground: 230 13% 14%;     /* high-contrast ink */
+
+    /* Surfaces */
+    --card: 0 0% 100%;
+    --card-foreground: 230 13% 14%;
+    --surface: 0 0% 100%;
+    --surface-elevated: 0 0% 99%;  
+
+    /* Popovers (light) */
+    --popover: 0 0% 100%;
+    --popover-foreground: 230 13% 14%;
+
+    /* Brand — deep purple primary from banner/nav accents */
+    --primary: 266 64% 45%;        /* deep grape */
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 266 64% 40%;
+
+    /* Accent — deal/offer chip green from "New user offer" */
+    --accent: 145 63% 42%;
+    --accent-foreground: 0 0% 100%;
+    --accent-hover: 145 63% 36%;
+
+    /* Secondary/muted tints for tiles and pills */
+    --secondary: 270 40% 96%;
+    --secondary-foreground: 230 13% 20%;
+
+    --muted: 220 13% 95%;
+    --muted-foreground: 230 8% 45%;
+
+    /* Feedback */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders & focus ring */
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: var(--primary); /* ring is an HSL triple; tailwind will wrap with hsl() in config */
+
+    /* Typography tokens */
+    --text-primary: 230 13% 14%;
+    --text-secondary: 230 8% 45%;
+
+    /* Geometry & elevation */
+    --radius: 1rem;                /* larger, friendly corners */
+    --shadow-card: 0 8px 20px -8px hsl(230 13% 14% / 0.10);
+    --shadow-elevated: 0 16px 32px -12px hsl(230 13% 14% / 0.14);
+
+    /* Banner gradient (purple sweep) */
+    --gradient-primary: linear-gradient(135deg, hsl(270 65% 46%), hsl(255 72% 52%));
+
+    /* Interactive */
+    --tap-scale: 0.98;
+
+    /* Sidebar (unused in flow but kept consistent) */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    /* Add dark surfaces to match light counterparts and avoid fallback inconsistencies */
+    --surface: 222.2 84% 6.5%;
+    --surface-elevated: 222.2 84% 8.5%;
+
+    --primary: 265 89% 78%;
+    --primary-foreground: 240 6% 10%;
+
+    --secondary: 250 22% 18%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 240 16% 20%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 152 54% 40%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 240 16% 20%;
+    --input: 240 16% 20%;
+    --ring: 265 89% 78%;
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Font family definitions */
+  .font-title {
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  
+  .font-body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  
+  /* Mobile-first utilities */
+  .safe-area-bottom {
+    /* Old iOS fallback then modern env with fallback value */
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  
+  .safe-area-top {
+    /* Old iOS fallback then modern env with fallback value */
+    padding-top: constant(safe-area-inset-top);
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  
+  /* Smooth scrolling and touch optimizations */
+  html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Focus styles for accessibility */
+  *:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+  }
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+    border-radius: 3px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary));
+    border-radius: 3px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary-hover));
+  }
+  
+  ::-webkit-scrollbar-corner {
+    background: hsl(var(--muted));
+  }
+  
+  /* iOS style bounce effect (Safari iOS only) */
+  @supports (-webkit-touch-callout: none) {
+    body {
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+}
+
+/* Fallback outline for browsers without :focus-visible */
+*:focus {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+}
+/* Remove double outline when :focus-visible is supported */
+*:focus:not(:focus-visible) {
+  outline: none;
+  outline-offset: 0;
+}
+
+/* Mobile optimizations */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Touch optimization */
+.touch-manipulation {
+  touch-action: manipulation;
+}
+
+/* Prevent text selection on interactive elements */
+.select-none {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Smooth transitions for interactive elements */
+.transition-smooth {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced focus styles for better accessibility */
+.focus-ring {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+}
+
+/* Extra small breakpoint for better mobile control */
+@media (min-width: 475px) {
+  .xs\:basis-\[42\%\] {
+    flex-basis: 42%;
+  }
+  
+  .xs\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  
+  .xs\:px-3 {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --border: 0 0% 0%;
+    --primary: 266 100% 50%;
+  }
+  
+  .dark {
+    --border: 0 0% 100%;
+    --primary: 266 100% 70%;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

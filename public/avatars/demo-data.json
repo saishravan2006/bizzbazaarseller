@@ -1,0 +1,23 @@
+{
+  "note": "Demo avatar images would be placed in this folder",
+  "avatars": [
+    "alex.jpg",
+    "jason.jpg",
+    "natasha.jpg",
+    "priya.jpg",
+    "raj.jpg",
+    "sarah.jpg",
+    "david.jpg",
+    "maya.jpg",
+    "arjun.jpg",
+    "kavya.jpg"
+  ],
+  "logos": [
+    "tata.svg",
+    "reliance.svg",
+    "flipkart.svg",
+    "swiggy.svg",
+    "zomato.svg",
+    "paytm.svg"
+  ]
+}

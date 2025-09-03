@@ -1,0 +1,85 @@
+{
+  "layout": "OPTION_B_GROUPED_SECTIONS",
+  "theme": { "primary": "#6E56CF", "accent": "#7C3AED", "mode": "light" },
+  "fonts": { "title": "Poppins", "body": "Inter" },
+  "sections": [
+    {
+      "section_code": "FOOD_FRESH",
+      "section_label_en": "Food & Fresh",
+      "items": [
+        { "code": "GROCERY", "label_en": "Grocery Store", "icon": "shopping-cart" },
+        { "code": "SUPERMARKET", "label_en": "Supermarket", "icon": "building" },
+        { "code": "DAIRY_PARLOUR", "label_en": "Dairy Booth/Parlour", "icon": "milk" },
+        { "code": "BAKERY", "label_en": "Bakery", "icon": "cake" },
+        { "code": "SWEET_SHOP", "label_en": "Sweet Shop", "icon": "candy" },
+        { "code": "FRUIT_VENDOR", "label_en": "Fruit Vendor", "icon": "apple" },
+        { "code": "VEGETABLE_VENDOR", "label_en": "Vegetable Vendor", "icon": "carrot" },
+        { "code": "MEAT_SHOP", "label_en": "Meat Shop", "icon": "beef" }
+      ]
+    },
+    {
+      "section_code": "HEALTH_BEAUTY",
+      "section_label_en": "Health & Beauty",
+      "items": [
+        { "code": "PHARMACY", "label_en": "Pharmacy", "icon": "pill" },
+        { "code": "COSMETICS", "label_en": "Cosmetics Store", "icon": "sparkles" },
+        { "code": "SALON", "label_en": "Beauty Salon", "icon": "scissors" },
+        { "code": "BARBERSHOP", "label_en": "Barber Shop", "icon": "scissors" },
+        { "code": "SPA", "label_en": "Spa & Wellness", "icon": "flower" },
+        { "code": "MEDICAL_STORE", "label_en": "Medical Store", "icon": "cross" }
+      ]
+    },
+    {
+      "section_code": "FASHION_LIFESTYLE",
+      "section_label_en": "Fashion & Lifestyle", 
+      "items": [
+        { "code": "CLOTHING", "label_en": "Clothing Store", "icon": "shirt" },
+        { "code": "FOOTWEAR", "label_en": "Footwear Shop", "icon": "footprints" },
+        { "code": "JEWELRY", "label_en": "Jewelry Shop", "icon": "gem" },
+        { "code": "BAGS_ACCESSORIES", "label_en": "Bags & Accessories", "icon": "briefcase" },
+        { "code": "WATCHES", "label_en": "Watch Store", "icon": "watch" },
+        { "code": "EYEWEAR", "label_en": "Eyewear Shop", "icon": "glasses" }
+      ]
+    },
+    {
+      "section_code": "ELECTRONICS_MOBILE",
+      "section_label_en": "Electronics & Mobile",
+      "items": [
+        { "code": "MOBILE_STORE", "label_en": "Mobile Store", "icon": "smartphone" },
+        { "code": "ELECTRONICS", "label_en": "Electronics Shop", "icon": "laptop" },
+        { "code": "COMPUTER_STORE", "label_en": "Computer Store", "icon": "pc" },
+        { "code": "MOBILE_REPAIR", "label_en": "Mobile Repair", "icon": "wrench" },
+        { "code": "APPLIANCES", "label_en": "Home Appliances", "icon": "tv" }
+      ]
+    },
+    {
+      "section_code": "SERVICES",
+      "section_label_en": "Services",
+      "items": [
+        { "code": "RESTAURANT", "label_en": "Restaurant", "icon": "utensils" },
+        { "code": "CAFE", "label_en": "Cafe", "icon": "coffee" },
+        { "code": "LAUNDRY", "label_en": "Laundry Service", "icon": "washing-machine" },
+        { "code": "XEROX", "label_en": "Xerox & Printing", "icon": "printer" },
+        { "code": "TRAVEL_AGENCY", "label_en": "Travel Agency", "icon": "plane" },
+        { "code": "COURIER", "label_en": "Courier Service", "icon": "package" }
+      ]
+    },
+    {
+      "section_code": "AUTOMOTIVE",
+      "section_label_en": "Automotive",
+      "items": [
+        { "code": "AUTO_REPAIR", "label_en": "Auto Repair", "icon": "car" },
+        { "code": "PETROL_PUMP", "label_en": "Petrol Pump", "icon": "fuel" },
+        { "code": "BIKE_REPAIR", "label_en": "Bike Repair", "icon": "bike" },
+        { "code": "AUTO_PARTS", "label_en": "Auto Parts", "icon": "settings" }
+      ]
+    }
+  ],
+  "special": { 
+    "other": { 
+      "code": "OTHER", 
+      "label_en": "Other (Create custom type)", 
+      "icon": "plus" 
+    } 
+  }
+}

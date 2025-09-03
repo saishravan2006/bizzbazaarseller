@@ -1,0 +1,2296 @@
+{
+  "version": "2.1",
+  "updated": "2025-08-31",
+  "notes": "Master store types for India (incl. Chennai coverage implicitly). Patch v3 eliminated as requested. Includes Fancy Store.",
+  "schema": {
+    "group_code": "string",
+    "group_name": "string",
+    "stores[].code": "string",
+    "stores[].name": "string",
+    "stores[].parent_group": "string",
+    "stores[].synonyms": "string[]",
+    "stores[].flags": "string[]",
+    "stores[].is_wholesale": "boolean"
+  },
+  "groups": [
+    {
+      "group_code": "GROCERY_DAILY_NEEDS",
+      "group_name": "Grocery & Daily Needs",
+      "stores": [
+        {
+          "code": "STORE_KIRANA",
+          "name": "Kirana / General Provision Store",
+          "parent_group": "GROCERY_DAILY_NEEDS",
+          "synonyms": [
+            "general store",
+            "provision store",
+            "margin free"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_SUPERMARKET",
+          "name": "Supermarket",
+          "parent_group": "GROCERY_DAILY_NEEDS",
+          "synonyms": [
+            "modern trade",
+            "mini market"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_HYPERMARKET",
+          "name": "Hypermarket",
+          "parent_group": "GROCERY_DAILY_NEEDS",
+          "synonyms": [
+            "big box"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_CASH_CARRY",
+          "name": "Discount / Cash-and-Carry Wholesale",
+          "parent_group": "GROCERY_DAILY_NEEDS",
+          "synonyms": [
+            "wholesale club"
+          ],
+          "flags": [],
+          "is_wholesale": true
+        },
+        {
+          "code": "STORE_PDS_RATION",
+          "name": "Fair Price Shop / Ration (PDS)",
+          "parent_group": "GROCERY_DAILY_NEEDS",
+          "synonyms": [
+            "ration shop",
+            "public distribution"
+          ],
+          "flags": [
+            "STATE_REGULATED"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_ORGANIC",
+          "name": "Organic / Natural Foods Store",
+          "parent_group": "GROCERY_DAILY_NEEDS",
+          "synonyms": [
+            "organic foods",
+            "millets"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_DAIRY_PARLOUR",
+          "name": "Dairy Booth / Parlour",
+          "parent_group": "GROCERY_DAILY_NEEDS",
+          "synonyms": [
+            "milk booth",
+            "amul aavin nandini"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_ICECREAM",
+          "name": "Ice-Cream Parlour",
+          "parent_group": "GROCERY_DAILY_NEEDS",
+          "synonyms": [
+            "gelato",
+            "ice cream shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_WATER_CANS",
+          "name": "Packaged Drinking Water / 20L Can Supplier",
+          "parent_group": "GROCERY_DAILY_NEEDS",
+          "synonyms": [
+            "water can supplier",
+            "jar water"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_DRYFRUITS_SPICES",
+          "name": "Dry Fruits & Spices Store",
+          "parent_group": "GROCERY_DAILY_NEEDS",
+          "synonyms": [
+            "masala store",
+            "nut shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_PICKLES_PAPAD",
+          "name": "Pickles / Papad / Appalam Outlet",
+          "parent_group": "GROCERY_DAILY_NEEDS",
+          "synonyms": [
+            "achar store",
+            "vadam appalam"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_IDLI_DOSA_BATTER",
+          "name": "Idli / Dosa Batter Counter",
+          "parent_group": "GROCERY_DAILY_NEEDS",
+          "synonyms": [
+            "batter store",
+            "wet grinder batter"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_ICE_FACTORY_COUNTER",
+          "name": "Ice Factory Retail Counter",
+          "parent_group": "GROCERY_DAILY_NEEDS",
+          "synonyms": [
+            "ice slabs",
+            "ice blocks"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "FRESH_PRODUCE_FLOWERS",
+      "group_name": "Fresh Produce & Flowers",
+      "stores": [
+        {
+          "code": "STORE_FRUIT_VEG",
+          "name": "Fruit & Vegetable Shop",
+          "parent_group": "FRESH_PRODUCE_FLOWERS",
+          "synonyms": [
+            "sabzi shop",
+            "greens store"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_APMC_RETAIL",
+          "name": "APMC / Mandi Retail Counter",
+          "parent_group": "FRESH_PRODUCE_FLOWERS",
+          "synonyms": [
+            "mandi outlet"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_FLORIST",
+          "name": "Florist / Garland Maker",
+          "parent_group": "FRESH_PRODUCE_FLOWERS",
+          "synonyms": [
+            "flower shop",
+            "pookadai"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_NURSERY",
+          "name": "Plant Nursery & Gardening",
+          "parent_group": "FRESH_PRODUCE_FLOWERS",
+          "synonyms": [
+            "garden supplies"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "BAKERY_SWEETS_SNACKS",
+      "group_name": "Bakery, Sweets & Snacks",
+      "stores": [
+        {
+          "code": "STORE_BAKERY",
+          "name": "Bakery",
+          "parent_group": "BAKERY_SWEETS_SNACKS",
+          "synonyms": [
+            "breads & cakes"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_MITHAI",
+          "name": "Mithai / Sweets Shop",
+          "parent_group": "BAKERY_SWEETS_SNACKS",
+          "synonyms": [
+            "sweet shop",
+            "halwai"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_NAMKEEN",
+          "name": "Namkeen & Snacks Shop",
+          "parent_group": "BAKERY_SWEETS_SNACKS",
+          "synonyms": [
+            "mixtures",
+            "bhujia"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_CHOCOLATIER",
+          "name": "Chocolatier / Confectionery",
+          "parent_group": "BAKERY_SWEETS_SNACKS",
+          "synonyms": [
+            "chocolate boutique"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_CAKE_BOUTIQUE",
+          "name": "Cake Boutique / Custom Cakes",
+          "parent_group": "BAKERY_SWEETS_SNACKS",
+          "synonyms": [
+            "custom cakes"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "MEAT_POULTRY_SEAFOOD",
+      "group_name": "Meat, Poultry & Seafood",
+      "stores": [
+        {
+          "code": "STORE_BUTCHER",
+          "name": "Butcher (Halal/Jhatka)",
+          "parent_group": "MEAT_POULTRY_SEAFOOD",
+          "synonyms": [
+            "mutton shop",
+            "chicken shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_PORK",
+          "name": "Pork Shop (where permitted)",
+          "parent_group": "MEAT_POULTRY_SEAFOOD",
+          "synonyms": [],
+          "flags": [
+            "STATE_DEPENDENT"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_EGGS",
+          "name": "Egg Shop",
+          "parent_group": "MEAT_POULTRY_SEAFOOD",
+          "synonyms": [
+            "egg stall"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_FISHMONGER",
+          "name": "Fishmonger / Seafood Store",
+          "parent_group": "MEAT_POULTRY_SEAFOOD",
+          "synonyms": [
+            "fish market"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_FROZEN_MEAT",
+          "name": "Frozen Meat & Seafood Outlet",
+          "parent_group": "MEAT_POULTRY_SEAFOOD",
+          "synonyms": [
+            "frozen foods"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "BEVERAGES_CAFE",
+      "group_name": "Beverages (Non‑Alcoholic) & Café Retail",
+      "stores": [
+        {
+          "code": "STORE_TEA_COFFEE",
+          "name": "Tea & Coffee Specialty Retail",
+          "parent_group": "BEVERAGES_CAFE",
+          "synonyms": [
+            "filter coffee",
+            "loose tea"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_JUICE_BAR",
+          "name": "Juice / Sugarcane / Smoothie Bar",
+          "parent_group": "BEVERAGES_CAFE",
+          "synonyms": [
+            "juice shop",
+            "ganne ka juice"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "ALCOHOL_RETAIL",
+      "group_name": "Licensed Alcohol Retail",
+      "stores": [
+        {
+          "code": "STORE_WINE_GOVT",
+          "name": "Government Wine Shop",
+          "parent_group": "ALCOHOL_RETAIL",
+          "synonyms": [
+            "tasamac",
+            "bevco"
+          ],
+          "flags": [
+            "ALCOHOL_LICENSED",
+            "STATE_REGULATED"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_WINE_PRIVATE",
+          "name": "Private Wine & Beer Shop",
+          "parent_group": "ALCOHOL_RETAIL",
+          "synonyms": [
+            "liquor store"
+          ],
+          "flags": [
+            "ALCOHOL_LICENSED"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_LIQUOR_BOUTIQUE",
+          "name": "Premium Liquor Boutique",
+          "parent_group": "ALCOHOL_RETAIL",
+          "synonyms": [
+            "premium alcohol"
+          ],
+          "flags": [
+            "ALCOHOL_LICENSED"
+          ],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "PHARMA_HEALTH",
+      "group_name": "Pharmacy, Health & Wellness",
+      "stores": [
+        {
+          "code": "STORE_PHARMACY",
+          "name": "Chemist / Pharmacy",
+          "parent_group": "PHARMA_HEALTH",
+          "synonyms": [
+            "medical shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_JAN_AUSHADHI",
+          "name": "Jan Aushadhi (Generic Medicines)",
+          "parent_group": "PHARMA_HEALTH",
+          "synonyms": [
+            "generic pharmacy"
+          ],
+          "flags": [
+            "GOVT_PROGRAM"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_AYUSH",
+          "name": "Ayurveda / Siddha / Unani",
+          "parent_group": "PHARMA_HEALTH",
+          "synonyms": [
+            "naatu marundhu",
+            "ayush"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_HOMEOPATHY",
+          "name": "Homeopathy Store",
+          "parent_group": "PHARMA_HEALTH",
+          "synonyms": [],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_SUPPLEMENTS",
+          "name": "Nutraceuticals & Supplements",
+          "parent_group": "PHARMA_HEALTH",
+          "synonyms": [
+            "sports nutrition"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_MED_EQUIP",
+          "name": "Medical Equipment & Surgical Supplies",
+          "parent_group": "PHARMA_HEALTH",
+          "synonyms": [
+            "wheelchairs",
+            "syringes"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_REHAB_ORTHO",
+          "name": "Rehab & Orthotics",
+          "parent_group": "PHARMA_HEALTH",
+          "synonyms": [
+            "braces",
+            "orthotics"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_OPTICAL",
+          "name": "Optical / Eyewear (with eye testing)",
+          "parent_group": "PHARMA_HEALTH",
+          "synonyms": [
+            "spectacles",
+            "optician"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_HEARING",
+          "name": "Hearing Aids & Assistive Devices",
+          "parent_group": "PHARMA_HEALTH",
+          "synonyms": [
+            "hearing care"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_DIAGNOSTICS",
+          "name": "Diagnostics Collection Center",
+          "parent_group": "PHARMA_HEALTH",
+          "synonyms": [
+            "path lab collection"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "BEAUTY_PERSONAL",
+      "group_name": "Beauty & Personal Care",
+      "stores": [
+        {
+          "code": "STORE_COSMETICS",
+          "name": "Cosmetics & Perfumes / Attar",
+          "parent_group": "BEAUTY_PERSONAL",
+          "synonyms": [
+            "beauty products",
+            "attar"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_SALON",
+          "name": "Salon / Beauty Parlour",
+          "parent_group": "BEAUTY_PERSONAL",
+          "synonyms": [
+            "ladies parlour"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_BARBER",
+          "name": "Men’s Barber Shop",
+          "parent_group": "BEAUTY_PERSONAL",
+          "synonyms": [
+            "saloon",
+            "gents parlour"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_MEHENDI_NAIL",
+          "name": "Mehendi / Nail / Lash Boutique",
+          "parent_group": "BEAUTY_PERSONAL",
+          "synonyms": [
+            "mehandi",
+            "nail art"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_TATTOO",
+          "name": "Tattoo Studio (products + service)",
+          "parent_group": "BEAUTY_PERSONAL",
+          "synonyms": [
+            "tattoo shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "MOTHER_BABY_KIDS",
+      "group_name": "Mother, Baby & Kids",
+      "stores": [
+        {
+          "code": "STORE_BABY",
+          "name": "Baby Products & Maternity Store",
+          "parent_group": "MOTHER_BABY_KIDS",
+          "synonyms": [
+            "newborn store"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_UNIFORMS",
+          "name": "Kids Apparel & School Uniform Store",
+          "parent_group": "MOTHER_BABY_KIDS",
+          "synonyms": [
+            "school uniform"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_TOYS",
+          "name": "Toys & Educational Toys Store",
+          "parent_group": "MOTHER_BABY_KIDS",
+          "synonyms": [
+            "toy shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_PARTY_SUPPLIES",
+          "name": "Party Supplies Store",
+          "parent_group": "MOTHER_BABY_KIDS",
+          "synonyms": [
+            "balloon store"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "APPAREL_FASHION_JEWELLERY",
+      "group_name": "Apparel, Fashion & Jewellery",
+      "stores": [
+        {
+          "code": "STORE_APPAREL_MEN",
+          "name": "Men’s Apparel Store",
+          "parent_group": "APPAREL_FASHION_JEWELLERY",
+          "synonyms": [
+            "mens wear"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_APPAREL_WOMEN",
+          "name": "Women’s Apparel / Saree Showroom",
+          "parent_group": "APPAREL_FASHION_JEWELLERY",
+          "synonyms": [
+            "ladies wear",
+            "saree shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_ETHNIC_BOUTIQUE",
+          "name": "Ethnic Wear / Designer Boutique",
+          "parent_group": "APPAREL_FASHION_JEWELLERY",
+          "synonyms": [
+            "lehenga",
+            "boutique"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_LINGERIE",
+          "name": "Lingerie & Innerwear",
+          "parent_group": "APPAREL_FASHION_JEWELLERY",
+          "synonyms": [],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_FABRICS",
+          "name": "Fabric & Textiles (Unstitched)",
+          "parent_group": "APPAREL_FASHION_JEWELLERY",
+          "synonyms": [
+            "textiles"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_TAILOR",
+          "name": "Tailor / Alterations / Embroidery",
+          "parent_group": "APPAREL_FASHION_JEWELLERY",
+          "synonyms": [
+            "stitching",
+            "blouse stitching"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_SEWING_MACHINES",
+          "name": "Sewing & Embroidery Machines & Supplies",
+          "parent_group": "APPAREL_FASHION_JEWELLERY",
+          "synonyms": [
+            "sewing machine dealer"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_FOOTWEAR",
+          "name": "Footwear Store",
+          "parent_group": "APPAREL_FASHION_JEWELLERY",
+          "synonyms": [
+            "shoe shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_BAGS_LUGGAGE",
+          "name": "Bags & Luggage Store",
+          "parent_group": "APPAREL_FASHION_JEWELLERY",
+          "synonyms": [
+            "trolley bags"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_TRAVEL_ACCESSORIES",
+          "name": "Travel Accessories Store",
+          "parent_group": "APPAREL_FASHION_JEWELLERY",
+          "synonyms": [
+            "neck pillow",
+            "travel locks"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_WATCH",
+          "name": "Watch Store",
+          "parent_group": "APPAREL_FASHION_JEWELLERY",
+          "synonyms": [
+            "wrist watch"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_WATCH_SHOE_REPAIR",
+          "name": "Watch / Shoe Repair Kiosk",
+          "parent_group": "APPAREL_FASHION_JEWELLERY",
+          "synonyms": [
+            "shoe repair",
+            "cobbler"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_JEWELLERY_GOLD_DIAMOND",
+          "name": "Gold & Diamond Jewellery Showroom",
+          "parent_group": "APPAREL_FASHION_JEWELLERY",
+          "synonyms": [
+            "jeweller"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_JEWELLERY_IMMITATION",
+          "name": "Silver / Imitation Jewellery",
+          "parent_group": "APPAREL_FASHION_JEWELLERY",
+          "synonyms": [
+            "art jewellery",
+            "fancy jewellery"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_BULLION",
+          "name": "Bullion / Precious Metals Dealer",
+          "parent_group": "APPAREL_FASHION_JEWELLERY",
+          "synonyms": [
+            "gold coins",
+            "bullion"
+          ],
+          "flags": [
+            "LICENSED"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_ACCESSORIES",
+          "name": "Accessories (Belts / Wallets / Sunglasses)",
+          "parent_group": "APPAREL_FASHION_JEWELLERY",
+          "synonyms": [
+            "accessory store"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "BOOKS_STATIONERY_PRINT",
+      "group_name": "Books, Stationery & Printing",
+      "stores": [
+        {
+          "code": "STORE_BOOKS",
+          "name": "Bookstore (Academic/Competitive/Religious)",
+          "parent_group": "BOOKS_STATIONERY_PRINT",
+          "synonyms": [
+            "book shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_STATIONERY",
+          "name": "Stationery & Office Supplies",
+          "parent_group": "BOOKS_STATIONERY_PRINT",
+          "synonyms": [
+            "office supplies"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_OLD_BOOKS",
+          "name": "Old Books Store",
+          "parent_group": "BOOKS_STATIONERY_PRINT",
+          "synonyms": [
+            "second hand books"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_XEROX",
+          "name": "Photocopy / Xerox & Lamination",
+          "parent_group": "BOOKS_STATIONERY_PRINT",
+          "synonyms": [
+            "xerox center"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_RUBBER_STAMP",
+          "name": "Rubber Stamp / Visiting Cards",
+          "parent_group": "BOOKS_STATIONERY_PRINT",
+          "synonyms": [
+            "name stamp"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_PRINTING",
+          "name": "Digital / Offset Printing",
+          "parent_group": "BOOKS_STATIONERY_PRINT",
+          "synonyms": [
+            "printing press"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_FLEX_SIGNAGE",
+          "name": "Flex / Signage / Branding",
+          "parent_group": "BOOKS_STATIONERY_PRINT",
+          "synonyms": [
+            "vinyl signage"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_PHOTO_CAMERA",
+          "name": "Photo Studio & Camera Store",
+          "parent_group": "BOOKS_STATIONERY_PRINT",
+          "synonyms": [
+            "studio"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_PHOTO_MEDIA",
+          "name": "Photo Paper / Ink Media",
+          "parent_group": "BOOKS_STATIONERY_PRINT",
+          "synonyms": [],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_FILM",
+          "name": "Camera Film (where available)",
+          "parent_group": "BOOKS_STATIONERY_PRINT",
+          "synonyms": [
+            "35mm film"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "GIFTS_CRAFTS_DECOR",
+      "group_name": "Gifts, Crafts & Home Décor",
+      "stores": [
+        {
+          "code": "STORE_GIFT_NOVELTIES",
+          "name": "Gift & Novelties Store",
+          "parent_group": "GIFTS_CRAFTS_DECOR",
+          "synonyms": [
+            "gift shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_FANCY_GENERAL",
+          "name": "Fancy Store (Ladies Fancy & Gift Novelties)",
+          "parent_group": "GIFTS_CRAFTS_DECOR",
+          "synonyms": [
+            "ladies fancy",
+            "fancy shop",
+            "fancy & gift"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_HANDICRAFTS",
+          "name": "Handicrafts / Handlooms / Khadi",
+          "parent_group": "GIFTS_CRAFTS_DECOR",
+          "synonyms": [
+            "khadi bhandar"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_ART_CRAFT_SUPPLIES",
+          "name": "Art & Craft Supplies",
+          "parent_group": "GIFTS_CRAFTS_DECOR",
+          "synonyms": [
+            "craft shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_PHOTO_FRAMES",
+          "name": "Photo Frames & Art Gallery",
+          "parent_group": "GIFTS_CRAFTS_DECOR",
+          "synonyms": [
+            "framing"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_POOJA_ITEMS",
+          "name": "Pooja / Devotional Items Store",
+          "parent_group": "GIFTS_CRAFTS_DECOR",
+          "synonyms": [
+            "pooja samagri"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_TEMPLE_TRUST",
+          "name": "Temple / Trust Retail Counters",
+          "parent_group": "GIFTS_CRAFTS_DECOR",
+          "synonyms": [
+            "prasadam counter"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_ANTIQUES",
+          "name": "Antiques & Collectibles",
+          "parent_group": "GIFTS_CRAFTS_DECOR",
+          "synonyms": [
+            "antique dealer"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_NUMISMATICS",
+          "name": "Numismatics / Philately Dealer",
+          "parent_group": "GIFTS_CRAFTS_DECOR",
+          "synonyms": [
+            "coins & stamps"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "HOMEWARE_KITCHEN_WATER",
+      "group_name": "Homeware, Kitchen & Water",
+      "stores": [
+        {
+          "code": "STORE_KITCHENWARE",
+          "name": "Kitchenware & Utensils",
+          "parent_group": "HOMEWARE_KITCHEN_WATER",
+          "synonyms": [
+            "steel utensils"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_HOUSEWARE",
+          "name": "Houseware / Plasticware",
+          "parent_group": "HOMEWARE_KITCHEN_WATER",
+          "synonyms": [
+            "plastic items"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_CLEANING",
+          "name": "Cleaning Supplies & Home Essentials",
+          "parent_group": "HOMEWARE_KITCHEN_WATER",
+          "synonyms": [
+            "home cleaning"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_GAS_STOVES",
+          "name": "Gas Stoves & Cookware",
+          "parent_group": "HOMEWARE_KITCHEN_WATER",
+          "synonyms": [
+            "gas stove shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_RO_WATER_PURIFIERS",
+          "name": "Water Purifiers (RO) Sales & Service",
+          "parent_group": "HOMEWARE_KITCHEN_WATER",
+          "synonyms": [
+            "ro service"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "FURNITURE_FURNISH_LIGHTING",
+      "group_name": "Furniture, Furnishings & Lighting",
+      "stores": [
+        {
+          "code": "STORE_FURNITURE",
+          "name": "Furniture Showroom (Home/Office)",
+          "parent_group": "FURNITURE_FURNISH_LIGHTING",
+          "synonyms": [
+            "furniture shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_MATTRESS",
+          "name": "Mattress & Bedding Store",
+          "parent_group": "FURNITURE_FURNISH_LIGHTING",
+          "synonyms": [
+            "sleep store"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_HOME_FURNISH",
+          "name": "Home Furnishings (Curtains/Upholstery)",
+          "parent_group": "FURNITURE_FURNISH_LIGHTING",
+          "synonyms": [
+            "curtains"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_BLINDS",
+          "name": "Blinds / Window Treatments Specialty",
+          "parent_group": "FURNITURE_FURNISH_LIGHTING",
+          "synonyms": [
+            "window blinds"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_LIGHTING",
+          "name": "Lighting & Lamps Store",
+          "parent_group": "FURNITURE_FURNISH_LIGHTING",
+          "synonyms": [
+            "lighting shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_MODULAR_KITCHEN",
+          "name": "Modular Kitchen & Wardrobe Studio",
+          "parent_group": "FURNITURE_FURNISH_LIGHTING",
+          "synonyms": [
+            "wardrobes"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_INTERIOR_DECOR",
+          "name": "Interior Décor & Home Accessories",
+          "parent_group": "FURNITURE_FURNISH_LIGHTING",
+          "synonyms": [
+            "home decor"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "ELECTRONICS_APPLIANCES_IT",
+      "group_name": "Electronics, Appliances & IT",
+      "stores": [
+        {
+          "code": "STORE_CONS_ELECTRONICS",
+          "name": "Consumer Electronics & Appliances",
+          "parent_group": "ELECTRONICS_APPLIANCES_IT",
+          "synonyms": [
+            "electronics shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_BRAND_STORE",
+          "name": "Authorised Brand Store",
+          "parent_group": "ELECTRONICS_APPLIANCES_IT",
+          "synonyms": [
+            "apple store",
+            "samsung store"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_MOBILE",
+          "name": "Mobile Phones & Accessories",
+          "parent_group": "ELECTRONICS_APPLIANCES_IT",
+          "synonyms": [
+            "mobile shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_REPAIR",
+          "name": "Repair Shops (Mobile/TV/Appliance)",
+          "parent_group": "ELECTRONICS_APPLIANCES_IT",
+          "synonyms": [
+            "service center"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_COMPUTER",
+          "name": "Computer/Laptop & Peripherals Store",
+          "parent_group": "ELECTRONICS_APPLIANCES_IT",
+          "synonyms": [
+            "computer shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_PRINTER_SUPPLIES",
+          "name": "Printer / Ink / Toner Store",
+          "parent_group": "ELECTRONICS_APPLIANCES_IT",
+          "synonyms": [
+            "cartridges"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_GAMING",
+          "name": "Gaming Store (Consoles/Accessories)",
+          "parent_group": "ELECTRONICS_APPLIANCES_IT",
+          "synonyms": [
+            "gaming consoles"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_CCTV_HOME_AUTO",
+          "name": "CCTV / Security & Home Automation",
+          "parent_group": "ELECTRONICS_APPLIANCES_IT",
+          "synonyms": [
+            "security systems"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_MUSICAL_AUDIO",
+          "name": "Musical Instruments & Pro Audio",
+          "parent_group": "ELECTRONICS_APPLIANCES_IT",
+          "synonyms": [
+            "music instruments",
+            "DJ gear"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "ELECTRICAL_ENERGY",
+      "group_name": "Electrical & Energy",
+      "stores": [
+        {
+          "code": "STORE_ELECTRICALS",
+          "name": "Electricals & Wiring Store",
+          "parent_group": "ELECTRICAL_ENERGY",
+          "synonyms": [
+            "wire & cable"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_ELEC_FITTINGS",
+          "name": "Lighting / Electrical Fittings",
+          "parent_group": "ELECTRICAL_ENERGY",
+          "synonyms": [
+            "switchgear"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_BATTERIES_UPS",
+          "name": "Batteries, Inverters & UPS",
+          "parent_group": "ELECTRICAL_ENERGY",
+          "synonyms": [
+            "power backup"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_SOLAR",
+          "name": "Solar Panels & Solar Products Dealer",
+          "parent_group": "ELECTRICAL_ENERGY",
+          "synonyms": [
+            "solar dealer"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "HARDWARE_BUILD_MAT_HOMEIMP",
+      "group_name": "Hardware, Building Materials & Home Improvement",
+      "stores": [
+        {
+          "code": "STORE_HARDWARE",
+          "name": "Hardware Store (Tools/Fasteners)",
+          "parent_group": "HARDWARE_BUILD_MAT_HOMEIMP",
+          "synonyms": [
+            "nuts & bolts"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_PAINTS",
+          "name": "Paint & Tinting",
+          "parent_group": "HARDWARE_BUILD_MAT_HOMEIMP",
+          "synonyms": [
+            "paint shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_ADHESIVES",
+          "name": "Adhesives & Sealants",
+          "parent_group": "HARDWARE_BUILD_MAT_HOMEIMP",
+          "synonyms": [
+            "fevicol",
+            "sealants"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_SANITARYWARE",
+          "name": "Sanitaryware & Bath Fittings",
+          "parent_group": "HARDWARE_BUILD_MAT_HOMEIMP",
+          "synonyms": [
+            "bath fittings"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_TILES",
+          "name": "Tiles & Ceramics",
+          "parent_group": "HARDWARE_BUILD_MAT_HOMEIMP",
+          "synonyms": [
+            "tile shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_CEMENT_STEEL",
+          "name": "Cement & Steel Dealers",
+          "parent_group": "HARDWARE_BUILD_MAT_HOMEIMP",
+          "synonyms": [
+            "cement dealer"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_GRANITE_MARBLE",
+          "name": "Granite & Marble Yard",
+          "parent_group": "HARDWARE_BUILD_MAT_HOMEIMP",
+          "synonyms": [
+            "stone yard"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_ROOFING",
+          "name": "Roofing Sheets Dealer",
+          "parent_group": "HARDWARE_BUILD_MAT_HOMEIMP",
+          "synonyms": [
+            "roof sheets"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_PLYWOOD",
+          "name": "Plywood / Laminates / Veneers",
+          "parent_group": "HARDWARE_BUILD_MAT_HOMEIMP",
+          "synonyms": [
+            "ply shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_TIMBER",
+          "name": "Timber Depot / Saw Mill",
+          "parent_group": "HARDWARE_BUILD_MAT_HOMEIMP",
+          "synonyms": [
+            "wood depot"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_MOULDINGS",
+          "name": "Wood / PVC Mouldings",
+          "parent_group": "HARDWARE_BUILD_MAT_HOMEIMP",
+          "synonyms": [
+            "cornice"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_GLASS_ALU",
+          "name": "Glass & Aluminium Fabrication",
+          "parent_group": "HARDWARE_BUILD_MAT_HOMEIMP",
+          "synonyms": [
+            "aluminium fabricator"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_PLUMBING_PIPES",
+          "name": "Plumbing & Pipes Store",
+          "parent_group": "HARDWARE_BUILD_MAT_HOMEIMP",
+          "synonyms": [
+            "cpvc upvc"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_DOORS_WINDOWS",
+          "name": "Doors & Windows (UPVC/Wood/Aluminium)",
+          "parent_group": "HARDWARE_BUILD_MAT_HOMEIMP",
+          "synonyms": [
+            "uPVC windows"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_BRICKS_BLOCKS",
+          "name": "Bricks / Blocks (AAC)",
+          "parent_group": "HARDWARE_BUILD_MAT_HOMEIMP",
+          "synonyms": [
+            "aac blocks"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_SAND_AGGREGATES",
+          "name": "Sand & Aggregates Yard",
+          "parent_group": "HARDWARE_BUILD_MAT_HOMEIMP",
+          "synonyms": [
+            "m-sand",
+            "jelly"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_WATERPROOFING",
+          "name": "Waterproofing Chemicals",
+          "parent_group": "HARDWARE_BUILD_MAT_HOMEIMP",
+          "synonyms": [
+            "waterproofing"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_WALLPAPERS",
+          "name": "Wallpapers & Wall Coverings",
+          "parent_group": "HARDWARE_BUILD_MAT_HOMEIMP",
+          "synonyms": [
+            "wallpaper studio"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_SHUTTERING",
+          "name": "Shuttering / Scaffolding Rental",
+          "parent_group": "HARDWARE_BUILD_MAT_HOMEIMP",
+          "synonyms": [
+            "scaffolding rental"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "AUTO_CYCLE_MOBILITY",
+      "group_name": "Auto, Cycle & Mobility",
+      "stores": [
+        {
+          "code": "STORE_AUTO_SPARES",
+          "name": "Auto Spares & Accessories (2W/4W)",
+          "parent_group": "AUTO_CYCLE_MOBILITY",
+          "synonyms": [
+            "car accessories"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_LUBRICANTS",
+          "name": "Lubricants & Oils Store",
+          "parent_group": "AUTO_CYCLE_MOBILITY",
+          "synonyms": [
+            "engine oil"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_TYRE_ALIGNMENT",
+          "name": "Tyre Shop & Wheel Alignment",
+          "parent_group": "AUTO_CYCLE_MOBILITY",
+          "synonyms": [
+            "tyre dealer"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_AUTO_BATTERY",
+          "name": "Auto Battery Store",
+          "parent_group": "AUTO_CYCLE_MOBILITY",
+          "synonyms": [
+            "car battery"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_CYCLE",
+          "name": "Cycle Store & Repair",
+          "parent_group": "AUTO_CYCLE_MOBILITY",
+          "synonyms": [
+            "bicycle shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_PUNCTURE",
+          "name": "Puncture Shop",
+          "parent_group": "AUTO_CYCLE_MOBILITY",
+          "synonyms": [
+            "tyre puncture"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_GARAGE",
+          "name": "Garage / Workshop (with parts retail)",
+          "parent_group": "AUTO_CYCLE_MOBILITY",
+          "synonyms": [
+            "car workshop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_CAR_WASH",
+          "name": "Car Wash & Detailing",
+          "parent_group": "AUTO_CYCLE_MOBILITY",
+          "synonyms": [
+            "detailing studio"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_AUTO_SHOWROOMS",
+          "name": "Vehicle Showrooms (2W/3W/4W/EV)",
+          "parent_group": "AUTO_CYCLE_MOBILITY",
+          "synonyms": [
+            "bike showroom",
+            "car showroom"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_USED_VEHICLES",
+          "name": "Used Car / Bike Dealer",
+          "parent_group": "AUTO_CYCLE_MOBILITY",
+          "synonyms": [
+            "pre-owned cars"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_FUEL_PUMP",
+          "name": "Fuel Pump (Petrol/Diesel)",
+          "parent_group": "AUTO_CYCLE_MOBILITY",
+          "synonyms": [
+            "petrol pump"
+          ],
+          "flags": [
+            "STATE_REGULATED"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_CNG_LPG",
+          "name": "CNG / LPG Auto Gas",
+          "parent_group": "AUTO_CYCLE_MOBILITY",
+          "synonyms": [
+            "auto gas"
+          ],
+          "flags": [
+            "STATE_DEPENDENT"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_EV_CHARGING",
+          "name": "EV Charging Point & Accessories",
+          "parent_group": "AUTO_CYCLE_MOBILITY",
+          "synonyms": [
+            "ev charger"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_BATTERY_SWAPPING",
+          "name": "Battery Swapping Station",
+          "parent_group": "AUTO_CYCLE_MOBILITY",
+          "synonyms": [
+            "swapping"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "SPORTS_OUTDOOR_FITNESS",
+      "group_name": "Sports, Outdoor & Fitness",
+      "stores": [
+        {
+          "code": "STORE_SPORTS_GOODS",
+          "name": "Sports Goods Store",
+          "parent_group": "SPORTS_OUTDOOR_FITNESS",
+          "synonyms": [
+            "sports shop"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_FITNESS_EQUIP",
+          "name": "Fitness Equipment Store",
+          "parent_group": "SPORTS_OUTDOOR_FITNESS",
+          "synonyms": [
+            "treadmill"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_YOGA_PROPS",
+          "name": "Yoga / Wellness Props Store",
+          "parent_group": "SPORTS_OUTDOOR_FITNESS",
+          "synonyms": [
+            "yoga mats"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_OUTDOOR_GEAR",
+          "name": "Outdoor / Camping / Trekking Gear",
+          "parent_group": "SPORTS_OUTDOOR_FITNESS",
+          "synonyms": [
+            "camping gear"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "AGRI_RURAL_VET",
+      "group_name": "Agriculture, Rural & Veterinary",
+      "stores": [
+        {
+          "code": "STORE_SEEDS",
+          "name": "Seeds & Fertilizers Dealer",
+          "parent_group": "AGRI_RURAL_VET",
+          "synonyms": [
+            "seed store"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_PESTICIDES",
+          "name": "Pesticides / Agrochemicals Store",
+          "parent_group": "AGRI_RURAL_VET",
+          "synonyms": [
+            "agro chemicals"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_AGRI_IMPL",
+          "name": "Agri Implements Store",
+          "parent_group": "AGRI_RURAL_VET",
+          "synonyms": [
+            "sprayers",
+            "tillers"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_IRRIGATION_PUMPS",
+          "name": "Irrigation / Micro‑irrigation & Pumps",
+          "parent_group": "AGRI_RURAL_VET",
+          "synonyms": [
+            "drip irrigation"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_FODDER",
+          "name": "Fodder & Cattle Feed Store",
+          "parent_group": "AGRI_RURAL_VET",
+          "synonyms": [
+            "cattle feed"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_POULTRY_FEED",
+          "name": "Poultry Feed & Supplies",
+          "parent_group": "AGRI_RURAL_VET",
+          "synonyms": [
+            "chicken feed"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_BEEKEEPING",
+          "name": "Beekeeping (Apiculture) Supplies",
+          "parent_group": "AGRI_RURAL_VET",
+          "synonyms": [
+            "honey bee supplies"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_DAIRY_EQUIP",
+          "name": "Dairy Equipment & Milking Machines",
+          "parent_group": "AGRI_RURAL_VET",
+          "synonyms": [
+            "milking machine"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_POULTRY_EQUIP",
+          "name": "Poultry Equipment & Hatchery Outlet",
+          "parent_group": "AGRI_RURAL_VET",
+          "synonyms": [
+            "hatchery supplies"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_FISHERIES_FEED",
+          "name": "Fisheries Feed & Aerators",
+          "parent_group": "AGRI_RURAL_VET",
+          "synonyms": [
+            "fish feed"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_VET_MED_CLINIC",
+          "name": "Veterinary Medicine & Pet Clinic (with retail)",
+          "parent_group": "AGRI_RURAL_VET",
+          "synonyms": [
+            "vet clinic"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_AGRI_COMMISSION",
+          "name": "Agri Produce Procurement / Commission Agent Outlet",
+          "parent_group": "AGRI_RURAL_VET",
+          "synonyms": [
+            "commission agent"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "PETS_AQUARIUM_GROOMING",
+      "group_name": "Pets, Aquarium & Grooming",
+      "stores": [
+        {
+          "code": "STORE_PET_SHOP",
+          "name": "Pet Shop (Food/Accessories)",
+          "parent_group": "PETS_AQUARIUM_GROOMING",
+          "synonyms": [
+            "pet supplies"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_PET_GROOMING",
+          "name": "Pet Grooming Boutique",
+          "parent_group": "PETS_AQUARIUM_GROOMING",
+          "synonyms": [
+            "pet spa"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_AQUARIUM",
+          "name": "Aquarium Livestock & Aquatic Supplies",
+          "parent_group": "PETS_AQUARIUM_GROOMING",
+          "synonyms": [
+            "aquarium store"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "RETAIL_ADJACENT_SERVICES",
+      "group_name": "Services with Storefronts (Retail‑Adjacent)",
+      "stores": [
+        {
+          "code": "STORE_DRYCLEAN",
+          "name": "Dry Cleaners / Laundry / Ironing (Press)",
+          "parent_group": "RETAIL_ADJACENT_SERVICES",
+          "synonyms": [
+            "laundry"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_KEY_LOCKSMITH",
+          "name": "Key Maker / Locksmith",
+          "parent_group": "RETAIL_ADJACENT_SERVICES",
+          "synonyms": [
+            "key duplicate"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_COBBLER_KIOSK",
+          "name": "Cobbler / Mochi Kiosk",
+          "parent_group": "RETAIL_ADJACENT_SERVICES",
+          "synonyms": [
+            "shoe repair"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_INTERNET_CAFE",
+          "name": "Internet Café / CSC",
+          "parent_group": "RETAIL_ADJACENT_SERVICES",
+          "synonyms": [
+            "common service centre"
+          ],
+          "flags": [
+            "GOVT_PROGRAM"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_TRAVEL_AGENCY",
+          "name": "Travel Agency / Ticketing",
+          "parent_group": "RETAIL_ADJACENT_SERVICES",
+          "synonyms": [
+            "air ticketing"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_COURIER",
+          "name": "Courier & Logistics Franchise",
+          "parent_group": "RETAIL_ADJACENT_SERVICES",
+          "synonyms": [
+            "courier"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_GOVT_KIOSK",
+          "name": "PAN / Aadhaar / Utility Services Kiosk",
+          "parent_group": "RETAIL_ADJACENT_SERVICES",
+          "synonyms": [
+            "aadhar center"
+          ],
+          "flags": [
+            "GOVT_PROGRAM"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_BANKING_BC",
+          "name": "Banking Correspondent (BC/CSP) / Money Transfer",
+          "parent_group": "RETAIL_ADJACENT_SERVICES",
+          "synonyms": [
+            "bank mitra"
+          ],
+          "flags": [
+            "GOVT_PROGRAM"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_INSURANCE_POS",
+          "name": "Insurance / Mutual Fund PoS",
+          "parent_group": "RETAIL_ADJACENT_SERVICES",
+          "synonyms": [
+            "insurance point"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_PACKERS_MOVERS",
+          "name": "Packers & Movers Office (with packing materials retail)",
+          "parent_group": "RETAIL_ADJACENT_SERVICES",
+          "synonyms": [
+            "movers"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_TRAINING_FORMS",
+          "name": "Training + Books/Forms Combo Counter",
+          "parent_group": "RETAIL_ADJACENT_SERVICES",
+          "synonyms": [
+            "form sales"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "TELECOM_MEDIA",
+      "group_name": "Telecom & Media",
+      "stores": [
+        {
+          "code": "STORE_TELECOM_OP",
+          "name": "Telecom Operator Store (Jio/Airtel/Vi/BSNL)",
+          "parent_group": "TELECOM_MEDIA",
+          "synonyms": [
+            "service provider store"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_DTH",
+          "name": "DTH / Cable TV Dealer",
+          "parent_group": "TELECOM_MEDIA",
+          "synonyms": [
+            "set-top box"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_BROADBAND",
+          "name": "Broadband / ISP Outlet",
+          "parent_group": "TELECOM_MEDIA",
+          "synonyms": [
+            "internet provider"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "INDUSTRIAL_MRO",
+      "group_name": "Industrial & MRO",
+      "stores": [
+        {
+          "code": "STORE_INDUSTRIAL_SPARES",
+          "name": "Bearings / Belts / Industrial Spares",
+          "parent_group": "INDUSTRIAL_MRO",
+          "synonyms": [
+            "mro spares"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_WELDING_GAS",
+          "name": "Welding & Industrial Gases",
+          "parent_group": "INDUSTRIAL_MRO",
+          "synonyms": [
+            "argon",
+            "oxygen"
+          ],
+          "flags": [
+            "LICENSED"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_SAFETY_PPE",
+          "name": "Safety / PPE Store",
+          "parent_group": "INDUSTRIAL_MRO",
+          "synonyms": [
+            "safety gear"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_FIRE_EXT",
+          "name": "Fire Extinguishers (sales, refills)",
+          "parent_group": "INDUSTRIAL_MRO",
+          "synonyms": [
+            "fire safety"
+          ],
+          "flags": [
+            "LICENSED"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_INDUSTRIAL_CHEM",
+          "name": "Industrial Chemicals & Solvents",
+          "parent_group": "INDUSTRIAL_MRO",
+          "synonyms": [
+            "solvents"
+          ],
+          "flags": [
+            "LICENSED"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_PACKAGING_MAT",
+          "name": "Packaging Materials & Tapes",
+          "parent_group": "INDUSTRIAL_MRO",
+          "synonyms": [
+            "packing tapes"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_CORRUGATED",
+          "name": "Corrugated Boxes Dealer",
+          "parent_group": "INDUSTRIAL_MRO",
+          "synonyms": [
+            "carton boxes"
+          ],
+          "flags": [],
+          "is_wholesale": true
+        },
+        {
+          "code": "STORE_WEIGHING_SCALES",
+          "name": "Weighing Scales (Sales & Service)",
+          "parent_group": "INDUSTRIAL_MRO",
+          "synonyms": [
+            "weighing machine"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_LAB_GLASS_CHEM",
+          "name": "Lab Glassware & Chemicals (Edu/Industrial)",
+          "parent_group": "INDUSTRIAL_MRO",
+          "synonyms": [
+            "lab supplies"
+          ],
+          "flags": [
+            "LICENSED"
+          ],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "GOVT_COOP_SPECIAL",
+      "group_name": "Govt/Co‑op & Speciality Outlets",
+      "stores": [
+        {
+          "code": "STORE_FAIR_PRICE",
+          "name": "Fair Price Shop",
+          "parent_group": "GOVT_COOP_SPECIAL",
+          "synonyms": [
+            "ration shop"
+          ],
+          "flags": [
+            "STATE_REGULATED"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_MILK_FED",
+          "name": "Milk Federation Booths (Amul/Aavin/Nandini/Mother Dairy)",
+          "parent_group": "GOVT_COOP_SPECIAL",
+          "synonyms": [
+            "milk booth"
+          ],
+          "flags": [
+            "COOPERATIVE"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_HORTI_COOP",
+          "name": "Horticulture / Co‑op Outlets (HOPCOMS etc.)",
+          "parent_group": "GOVT_COOP_SPECIAL",
+          "synonyms": [
+            "horticulture outlet"
+          ],
+          "flags": [
+            "COOPERATIVE"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_FISH_MEAT_FED",
+          "name": "Fisheries / Meat Federation Retail",
+          "parent_group": "GOVT_COOP_SPECIAL",
+          "synonyms": [
+            "fisheries outlet"
+          ],
+          "flags": [
+            "COOPERATIVE"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_TRIBAL_HANDLOOM",
+          "name": "Tribal / Handloom / Khadi Emporiums",
+          "parent_group": "GOVT_COOP_SPECIAL",
+          "synonyms": [
+            "tribal emporium"
+          ],
+          "flags": [
+            "GOVT_ENTITY"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_KENDRIYA",
+          "name": "Kendriya Bhandar / Civil Supplies Corp",
+          "parent_group": "GOVT_COOP_SPECIAL",
+          "synonyms": [
+            "civil supplies"
+          ],
+          "flags": [
+            "GOVT_ENTITY"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_CSD_CPC",
+          "name": "CSD / CPC Canteens (Access‑restricted)",
+          "parent_group": "GOVT_COOP_SPECIAL",
+          "synonyms": [
+            "defence canteen"
+          ],
+          "flags": [
+            "ACCESS_RESTRICTED"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_INDIA_POST_PHIL",
+          "name": "India Post Philately & Retail Counters",
+          "parent_group": "GOVT_COOP_SPECIAL",
+          "synonyms": [
+            "philately"
+          ],
+          "flags": [
+            "GOVT_ENTITY"
+          ],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "SECONDHAND_RECYCLING_SEASONAL",
+      "group_name": "Second‑Hand, Recycling & Seasonal",
+      "stores": [
+        {
+          "code": "STORE_SCRAP",
+          "name": "Scrap Dealer / Kabadiwala (paper/metal/e‑waste)",
+          "parent_group": "SECONDHAND_RECYCLING_SEASONAL",
+          "synonyms": [
+            "kabadi"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_THRIFT",
+          "name": "Thrift / Second‑Hand Goods",
+          "parent_group": "SECONDHAND_RECYCLING_SEASONAL",
+          "synonyms": [
+            "preloved"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_OLD_FURNITURE",
+          "name": "Old Furniture Store",
+          "parent_group": "SECONDHAND_RECYCLING_SEASONAL",
+          "synonyms": [
+            "used furniture"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_PAWN_GOLD_LOAN",
+          "name": "Pawn Broker / Gold Loan",
+          "parent_group": "SECONDHAND_RECYCLING_SEASONAL",
+          "synonyms": [
+            "finance pawn"
+          ],
+          "flags": [],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_FESTIVAL_SEASONAL",
+          "name": "Festival / Seasonal Shops (Rakhi, Golu dolls, Kites)",
+          "parent_group": "SECONDHAND_RECYCLING_SEASONAL",
+          "synonyms": [
+            "seasonal shop"
+          ],
+          "flags": [
+            "SEASONAL"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_FIREWORKS",
+          "name": "Fireworks Shop (licensed)",
+          "parent_group": "SECONDHAND_RECYCLING_SEASONAL",
+          "synonyms": [
+            "crackers"
+          ],
+          "flags": [
+            "FIREWORKS_LICENSED",
+            "STATE_DEPENDENT",
+            "SEASONAL"
+          ],
+          "is_wholesale": false
+        },
+        {
+          "code": "STORE_STATE_LOTTERY",
+          "name": "State Lottery Retailer (where permitted)",
+          "parent_group": "SECONDHAND_RECYCLING_SEASONAL",
+          "synonyms": [
+            "lottery shop"
+          ],
+          "flags": [
+            "LOTTERY_STATE_DEPENDENT"
+          ],
+          "is_wholesale": false
+        }
+      ]
+    },
+    {
+      "group_code": "TOBACCO_PAAN",
+      "group_name": "Tobacco & Paan (state‑regulated)",
+      "stores": [
+        {
+          "code": "STORE_PAAN_TOBACCO",
+          "name": "Paan & Tobacco Shop",
+          "parent_group": "TOBACCO_PAAN",
+          "synonyms": [
+            "pan shop",
+            "beedi",
+            "cigarette"
+          ],
+          "flags": [
+            "TOBACCO_RESTRICTED",
+            "STATE_REGULATED"
+          ],
+          "is_wholesale": false
+        }
+      ]
+    }
+  ]
+}
