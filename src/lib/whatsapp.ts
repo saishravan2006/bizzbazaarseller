@@ -1,6 +1,6 @@
 import { Lang } from '@/store/useStore';
 
-const BOT_NUMBER = "+917010685123";
+const BOT_NUMBER = "+918870751384";
 
 export const encodePayloadV2Lite = (
   storeId: string,
