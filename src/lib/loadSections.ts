@@ -1,5 +1,6 @@
 export type UiItem = {
   code: string;
+  slug?: string;
   label_en: string;
   icon?: string;
   synonyms?: string[];
@@ -9,7 +10,10 @@ export type UiItem = {
 
 export type UiSection = {
   section_code: string;
+  section_slug?: string;
   section_label_en: string;
+  icon?: string;
+  flags?: string[];
   items: UiItem[];
 };
 

@@ -1,32 +1,25 @@
 import React, { useState, useEffect, useMemo, useCallback, useDeferredValue } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
-import { Search, X, AlertCircle, RefreshCw } from 'lucide-react';
+import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
+import { Search, X, AlertCircle, RefreshCw, Sparkles } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { TopBar } from '@/components/TopBar';
 import { StickyMiniCard } from '@/components/StickyMiniCard';
 import { StoreTypeCard } from '@/components/StoreTypeCard';
-import { SectionHeader } from '@/components/SectionHeader';
 import { OtherSheet } from '@/components/OtherSheet';
 import { MultiSelectModal } from '@/components/MultiSelectModal';
+import { CategoryHub } from '@/components/CategoryHub';
+import { SubcategorySheet } from '@/components/SubcategorySheet';
 import { useStore } from '@/store/useStore';
 import { useNavigate } from 'react-router-dom';
 import { t } from '@/lib/i18n';
-import { loadSections, type SectionsDoc, type UiItem } from '@/lib/loadSections';
+import { loadSections, type SectionsDoc, type UiItem, type UiSection } from '@/lib/loadSections';
 import { matchesQuery } from '@/lib/search';
 import { pageVariants, listVariants, listItemVariants, searchVariants } from '@/lib/motion';
 import { Skeleton } from '@/components/ui/skeleton';
 import LazyPromoCarousel from '@/components/LazyPromoCarousel';
-// Added: carousel for horizontal flows and sheet for See All
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Sparkles } from 'lucide-react';
-import { Virtuoso } from 'react-virtuoso';
-import { AnimatePresence } from 'framer-motion';
-
-// Remove old interface - using SectionsDoc from loadSections
 
 export const StoreType = () => {
-  const { lang, selected, toggleType, resetToSingle, addCustomType, removeType } = useStore();
+  const { lang, selected, toggleType, resetToSingle, addCustomType, removeType, removeMultiple } = useStore();
   const [searchTerm, setSearchTerm] = useState('');
   const deferredSearchTerm = useDeferredValue(searchTerm);
   const [sectionsData, setSectionsData] = useState<SectionsDoc | null>(null);
@@ -45,14 +38,17 @@ export const StoreType = () => {
   });
   const [isStubData, setIsStubData] = useState(false);
   const [retryLoading, setRetryLoading] = useState(false);
-  // Added: See All sheet state and trending search helpers
-  const [seeAllSection, setSeeAllSection] = useState<{ label: string; items: UiItem[] } | null>(null);
-  const trendingSuggestions = ['Provisional Store', 'Supermarket', 'Stationary', 'Electronics', 'Snacks'];
+
+  // NEW: Subcategory sheet state
+  const [selectedSection, setSelectedSection] = useState<UiSection | null>(null);
+  const [isSubcategorySheetOpen, setIsSubcategorySheetOpen] = useState(false);
+
+  // Updated trending suggestions to match new categories
+  const trendingSuggestions = ['Fresh Produce', 'Grocery', 'Dairy', 'Electronics', 'Fashion'];
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const navigate = useNavigate();
   const shouldReduceMotion = useReducedMotion();
-  
-  // Results grid ID for accessibility
+
   const resultsGridId = 'store-type-results-grid';
 
   const loadData = useCallback(async () => {
@@ -60,7 +56,6 @@ export const StoreType = () => {
     try {
       const data = await loadSections();
       setSectionsData(data);
-      // Check if we got stub data
       setIsStubData(data.sections.length === 1 && data.sections[0].section_code === 'STUB');
     } catch (error) {
       console.error('Error loading sections:', error);
@@ -75,37 +70,36 @@ export const StoreType = () => {
     loadData();
   }, [loadData]);
 
-  // Rotate placeholder to make search feel lively when empty
+  // Rotate placeholder
   useEffect(() => {
-    if (searchTerm) return; // pause rotation while user types
+    if (searchTerm) return;
     const id = setInterval(() => {
       setPlaceholderIndex((i) => (i + 1) % trendingSuggestions.length);
     }, 2500);
     return () => clearInterval(id);
   }, [searchTerm]);
 
-  // Memoized filter functions for performance
+  // Memoized filter
   const filterItems = useCallback((items: UiItem[], searchTerm: string) => {
     if (!searchTerm) return items;
     return items.filter(item => matchesQuery(item, searchTerm));
   }, []);
 
-  // Memoized filtered items computation using deferred search term
+  // Search results - flatten all items when searching
   const filteredItems = useMemo(() => {
     if (!sectionsData || !deferredSearchTerm) return [];
-    return sectionsData.sections.flatMap(section => 
-      filterItems(section.items, deferredSearchTerm).map(item => ({ 
-        ...item, 
-        section: section.section_label_en 
+    return sectionsData.sections.flatMap(section =>
+      filterItems(section.items, deferredSearchTerm).map(item => ({
+        ...item,
+        section: section.section_label_en
       }))
     );
   }, [sectionsData, deferredSearchTerm, filterItems]);
 
   const hasResults = filteredItems.length > 0;
 
-  // Stable callback handlers for performance
+  // Handle type selection with multi-select modal
   const handleTypeSelect = useCallback((code: string, label: string) => {
-    // Check if this is a second selection
     if (selected.codes.length === 1 && !selected.codes.includes(code)) {
       setMultiSelectModal({
         isOpen: true,
@@ -128,9 +122,17 @@ export const StoreType = () => {
     setMultiSelectModal({ ...multiSelectModal, isOpen: false });
   }, [multiSelectModal, resetToSingle]);
 
-  // Enable: See All
-  const handleSeeAll = useCallback((section: { section_label_en: string; items: UiItem[] }) => {
-    setSeeAllSection({ label: section.section_label_en, items: section.items });
+  // NEW: Handle category card click - open subcategory sheet
+  const handleCategoryClick = useCallback((section: UiSection) => {
+    setSelectedSection(section);
+    setIsSubcategorySheetOpen(true);
+  }, []);
+
+  // Handle subcategory sheet close
+  const handleSubcategorySheetClose = useCallback(() => {
+    setIsSubcategorySheetOpen(false);
+    // Delay clearing section to allow exit animation
+    setTimeout(() => setSelectedSection(null), 300);
   }, []);
 
   const handleOtherSelect = useCallback(() => {
@@ -145,14 +147,12 @@ export const StoreType = () => {
     navigate('/confirm');
   }, [navigate]);
 
-  // Handle deselection from sticky card chips
   const handleDeselect = useCallback((index: number) => {
     if (index < selected.codes.length) {
       removeType(selected.codes[index]);
     }
   }, [selected.codes, removeType]);
 
-  // Handle retry loading
   const handleRetry = useCallback(() => {
     setIsStubData(false);
     loadData();
@@ -163,17 +163,16 @@ export const StoreType = () => {
       <div className="min-h-screen bg-background">
         <TopBar title={t('select_store_type', lang)} />
         <div className="px-4 sm:px-6 py-4 sm:py-5">
-          {/* Search skeleton */}
           <div className="relative mb-6">
             <Skeleton className="h-12 w-full rounded-full" />
           </div>
-          {/* Grid skeleton */}
-          <div className="grid grid-cols-2 gap-3">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="p-4 rounded-2xl border border-input bg-card">
-                <div className="flex flex-col items-center text-center gap-3">
-                  <Skeleton className="w-10 h-10 rounded-xl" />
-                  <Skeleton className="h-3 w-24 rounded-full" />
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div key={i} className="p-4 sm:p-5 rounded-2xl border border-input bg-card">
+                <div className="flex flex-col gap-3">
+                  <Skeleton className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl" />
+                  <Skeleton className="h-4 w-3/4 rounded" />
+                  <Skeleton className="h-3 w-1/2 rounded" />
                 </div>
               </div>
             ))}
@@ -183,21 +182,20 @@ export const StoreType = () => {
     );
   }
 
-  // Create motion variants that respect reduced motion
-  const adaptivePageVariants = shouldReduceMotion 
+  const adaptivePageVariants = shouldReduceMotion
     ? { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } }
     : pageVariants;
-    
+
   const adaptiveListVariants = shouldReduceMotion
     ? { hidden: { opacity: 0 }, visible: { opacity: 1 } }
     : listVariants;
-    
+
   const adaptiveItemVariants = shouldReduceMotion
     ? { hidden: { opacity: 0 }, visible: { opacity: 1 } }
     : listItemVariants;
 
   return (
-    <motion.div 
+    <motion.div
       className="min-h-screen bg-background"
       variants={adaptivePageVariants}
       initial="initial"
@@ -234,19 +232,18 @@ export const StoreType = () => {
           )}
         </AnimatePresence>
 
-        {/* Lazy Promo Carousel */}
+        {/* Promo Carousel */}
         <div className="mb-5">
           <LazyPromoCarousel />
         </div>
 
         {/* Search */}
-        <motion.div 
+        <motion.div
           className="relative mb-3"
           variants={shouldReduceMotion ? { initial: { opacity: 1 }, focus: { opacity: 1 } } : searchVariants}
           whileFocus="focus"
           initial="initial"
         >
-          {/* Gradient wrapper to make the search feel special */}
           <div className="p-[2px] rounded-full bg-gradient-to-r from-primary/70 via-fuchsia-500/60 to-purple-600/60">
             <div className="relative rounded-full bg-secondary shadow-[0_1px_2px_rgba(0,0,0,0.04),0_6px_16px_-8px_rgba(0,0,0,0.12)]">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5 transition-colors" />
@@ -262,7 +259,6 @@ export const StoreType = () => {
                 aria-controls={deferredSearchTerm ? resultsGridId : undefined}
                 aria-expanded={deferredSearchTerm ? hasResults : undefined}
               />
-              {/* Sparkle accent on the right to attract attention */}
               <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-primary/70">
                 <Sparkles className="w-4 h-4 animate-pulse" />
               </div>
@@ -281,7 +277,8 @@ export const StoreType = () => {
             </div>
           </div>
         </motion.div>
-        {/* Trending quick search chips */}
+
+        {/* Quick Search Chips */}
         <motion.div
           className="mb-6 overflow-x-auto scrollbar-hide"
           initial={{ opacity: 0, y: 8 }}
@@ -301,10 +298,10 @@ export const StoreType = () => {
           </div>
         </motion.div>
 
-        {/* Results */}
+        {/* Main Content */}
         <div className="pb-24">
           {deferredSearchTerm ? (
-            // Search Results
+            // Search Results - shows flattened items from all categories
             <motion.div
               key="search-results"
               variants={adaptiveListVariants}
@@ -312,7 +309,7 @@ export const StoreType = () => {
               animate="visible"
             >
               {hasResults ? (
-                <motion.div 
+                <motion.div
                   id={resultsGridId}
                   className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 mb-6"
                   variants={adaptiveListVariants}
@@ -351,7 +348,7 @@ export const StoreType = () => {
                   ))}
                 </motion.div>
               ) : (
-                <motion.div 
+                <motion.div
                   className="text-center py-12"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -364,8 +361,8 @@ export const StoreType = () => {
                   <p className="text-muted-foreground/70 text-sm">Try a different search term</p>
                 </motion.div>
               )}
-              
-              {/* Always show Other option in search */}
+
+              {/* Other option in search */}
               <motion.div
                 className="mt-6"
                 initial={{ opacity: 0, y: 20 }}
@@ -382,64 +379,21 @@ export const StoreType = () => {
               </motion.div>
             </motion.div>
           ) : (
-            // Grouped Sections
+            // Category Hub - shows all 52 parent categories in a grid
             <motion.div
-              key="grouped-sections"
+              key="category-hub"
               variants={adaptiveListVariants}
               initial="hidden"
               animate="visible"
             >
-              {sectionsData.sections.map((section, sectionIndex) => (
-                <motion.div
-                  key={section.section_code}
-                  variants={adaptiveItemVariants}
-                  custom={sectionIndex}
-                >
-                  <SectionHeader
-                    title={section.section_label_en}
-                    rightLabel={"See All"}
-                    onRightAction={() => handleSeeAll(section)}
-                  >
-                    {/* Horizontal motion flow */}
-                    <Carousel opts={{ align: 'start', dragFree: true, loop: false }} className="w-full">
-                      <CarouselContent>
-                        {section.items.map((item, itemIndex) => (
-                          <CarouselItem key={item.code} className="basis-[45%] xs:basis-[42%] sm:basis-1/3 md:basis-1/4">
-                            <motion.div
-                              variants={adaptiveItemVariants}
-                              custom={itemIndex}
-                              className="h-full"
-                            >
-                              <div
-                                role="button"
-                                aria-pressed={selected.codes.includes(item.code)}
-                                tabIndex={0}
-                                onKeyDown={(e) => {
-                                  if (e.key === 'Enter' || e.key === ' ') {
-                                    e.preventDefault();
-                                    handleTypeSelect(item.code, item.label_en);
-                                  }
-                                }}
-                              >
-                                <StoreTypeCard
-                                  code={item.code}
-                                  label={item.label_en}
-                                  icon={item.icon}
-                                  selected={selected.codes.includes(item.code)}
-                                  onClick={() => handleTypeSelect(item.code, item.label_en)}
-                                />
-                              </div>
-                            </motion.div>
-                          </CarouselItem>
-                        ))}
-                      </CarouselContent>
-                    </Carousel>
-                  </SectionHeader>
-                </motion.div>
-              ))}
-              
+              <CategoryHub
+                sections={sectionsData.sections}
+                selectedCodes={selected.codes}
+                onCategoryClick={handleCategoryClick}
+              />
+
               {/* Other Card */}
-              <motion.div 
+              <motion.div
                 className="mt-8"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -458,10 +412,10 @@ export const StoreType = () => {
         </div>
       </div>
 
-      {/* Accessibility: Live region for selection announcements */}
-      <div 
-        aria-live="polite" 
-        aria-atomic="true" 
+      {/* Accessibility: Live region */}
+      <div
+        aria-live="polite"
+        aria-atomic="true"
         className="sr-only"
       >
         {selected.codes.length > 0 && `${selected.codes.length} selected`}
@@ -485,56 +439,16 @@ export const StoreType = () => {
         lang={lang}
       />
 
-      {/* See All Sheet with Virtualization */}
-      <Sheet open={!!seeAllSection} onOpenChange={(open) => { if (!open) setSeeAllSection(null); }}>
-        <SheetContent side="bottom" className="rounded-t-2xl h-[95vh] flex flex-col">
-          <SheetHeader className="flex-shrink-0">
-            <SheetTitle>{seeAllSection?.label}</SheetTitle>
-          </SheetHeader>
-          <div className="flex-1 mt-4 pb-6">
-            {seeAllSection?.items && (
-              <Virtuoso
-                style={{ height: '100%' }}
-                totalCount={Math.ceil(seeAllSection.items.length / 2)} // 2 columns
-                itemContent={(index) => {
-                  const startIndex = index * 2;
-                  const rowItems = seeAllSection.items.slice(startIndex, startIndex + 2);
-                  
-                  return (
-                    <div 
-                      className="grid grid-cols-2 gap-3 px-1 mb-3"
-                      style={{ height: '120px' }} // Fixed height for performance
-                    >
-                      {rowItems.map((item) => (
-                        <div
-                          key={item.code}
-                          role="button"
-                          aria-pressed={selected.codes.includes(item.code)}
-                          tabIndex={0}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                              e.preventDefault();
-                              handleTypeSelect(item.code, item.label_en);
-                            }
-                          }}
-                        >
-                          <StoreTypeCard
-                            code={item.code}
-                            label={item.label_en}
-                            icon={item.icon}
-                            selected={selected.codes.includes(item.code)}
-                            onClick={() => handleTypeSelect(item.code, item.label_en)}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  );
-                }}
-              />
-            )}
-          </div>
-        </SheetContent>
-      </Sheet>
+      {/* NEW: Subcategory Sheet - shows children when parent is clicked */}
+      <SubcategorySheet
+        section={selectedSection}
+        isOpen={isSubcategorySheetOpen}
+        onClose={handleSubcategorySheetClose}
+        selectedCodes={selected.codes}
+        onToggle={handleTypeSelect}
+        onSelectAll={(code, label) => toggleType(code, label)}
+        onDeselectAll={(codes) => removeMultiple(codes)}
+      />
 
       {/* Multi Select Modal */}
       <MultiSelectModal

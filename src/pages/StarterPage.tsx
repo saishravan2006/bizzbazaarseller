@@ -158,4 +158,27 @@ const StarterPage: React.FC = () => {
           {/* Main image container */}
           <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/20">
             <img
-              src="/images/hero-image.jpg" />
+              src="/images/hero-image.jpg"
+              alt="Bizz Bazaar Hero"
+              className="w-full h-auto rounded-2xl shadow-lg"
+            />
+          </div>
+        </motion.div>
+
+        {/* Call to Action Button */}
+        <motion.button
+          className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 rounded-full font-semibold text-lg shadow-lg transition-all duration-200 flex items-center gap-2"
+          variants={buttonVariants}
+          whileHover="hover"
+          whileTap="tap"
+          onClick={handleGetStarted}
+        >
+          Get Started
+          <ArrowRight className="w-5 h-5" />
+        </motion.button>
+      </motion.div>
+    </>
+  );
+};
+
+export default StarterPage;

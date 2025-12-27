@@ -17,6 +17,7 @@ type AppState = {
   resetToSingle: (code: string, label: string) => void;
   addCustomType: (label: string) => void;
   removeType: (code: string) => void;
+  removeMultiple: (codes: string[]) => void;
 };
 
 // Generate unique store ID at boot
@@ -40,20 +41,20 @@ export const useStore = create<AppState>((set, get) => ({
     codes: [],
     labels: []
   },
-  
+
   setLang: (lang: Lang) => {
     localStorage.setItem('bizz-lang', lang);
     set({ lang });
   },
-  
+
   setStoreName: (storeName: string) => {
     set({ storeName });
   },
-  
+
   toggleType: (code: string, label: string) => {
     const state = get();
     const currentIndex = state.selected.codes.indexOf(code);
-    
+
     if (currentIndex === -1) {
       // Add new selection
       set({
@@ -74,7 +75,7 @@ export const useStore = create<AppState>((set, get) => ({
       });
     }
   },
-  
+
   resetToSingle: (code: string, label: string) => {
     set({
       selected: {
@@ -83,7 +84,7 @@ export const useStore = create<AppState>((set, get) => ({
       }
     });
   },
-  
+
   addCustomType: (label: string) => {
     // Create slug from label
     const slug = label
@@ -91,9 +92,9 @@ export const useStore = create<AppState>((set, get) => ({
       .replace(/[^a-z0-9\s]/g, '')
       .trim()
       .replace(/\s+/g, '_');
-    
+
     const customCode = `CUSTOM_${slug.toUpperCase()}`;
-    
+
     const state = get();
     set({
       selected: {
@@ -106,14 +107,14 @@ export const useStore = create<AppState>((set, get) => ({
   removeType: (code: string) => {
     const state = get();
     const index = state.selected.codes.indexOf(code);
-    
+
     if (index !== -1) {
       const newCodes = [...state.selected.codes];
       const newLabels = [...state.selected.labels];
-      
+
       newCodes.splice(index, 1);
       newLabels.splice(index, 1);
-      
+
       set({
         selected: {
           codes: newCodes,
@@ -121,5 +122,27 @@ export const useStore = create<AppState>((set, get) => ({
         }
       });
     }
+  },
+
+  removeMultiple: (codes: string[]) => {
+    const state = get();
+    const codesToRemove = new Set(codes);
+
+    const newCodes: string[] = [];
+    const newLabels: string[] = [];
+
+    state.selected.codes.forEach((code, index) => {
+      if (!codesToRemove.has(code)) {
+        newCodes.push(code);
+        newLabels.push(state.selected.labels[index]);
+      }
+    });
+
+    set({
+      selected: {
+        codes: newCodes,
+        labels: newLabels
+      }
+    });
   }
 }));
