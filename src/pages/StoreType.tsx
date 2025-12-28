@@ -17,7 +17,6 @@ import { matchesQuery } from '@/lib/search';
 import { pageVariants, listVariants, listItemVariants, searchVariants } from '@/lib/motion';
 import { Skeleton } from '@/components/ui/skeleton';
 import LazyPromoCarousel from '@/components/LazyPromoCarousel';
-import ReactConfetti from 'react-confetti';
 import { blinkitCategories } from '@/lib/blinkitCategories';
 
 // Category ID to Section Code mapping (based on sections_items_full.json)
@@ -150,10 +149,7 @@ export const StoreType = () => {
   const navigate = useNavigate();
   const shouldReduceMotion = useReducedMotion();
 
-  // Confetti state
-  const [showConfetti, setShowConfetti] = useState(false);
-  const { width, height } = useWindowSize();
-  const [isContinuing, setIsContinuing] = useState(false);
+
 
   const resultsGridId = 'store-type-results-grid';
 
@@ -270,17 +266,8 @@ export const StoreType = () => {
   }, [addCustomType]);
 
   const handleContinue = useCallback(() => {
-    if (selected.codes.length > 0) {
-      setShowConfetti(true);
-      setIsContinuing(true);
-      // Wait for confetti animation before navigating
-      setTimeout(() => {
-        navigate('/confirm');
-      }, 2500);
-    } else {
-      navigate('/confirm');
-    }
-  }, [navigate, selected.codes.length]);
+    navigate('/confirm');
+  }, [navigate]);
 
   const handleDeselect = useCallback((index: number) => {
     if (index < selected.codes.length) {
@@ -598,17 +585,7 @@ export const StoreType = () => {
         onDeselectAll={(codes) => removeMultiple(codes)}
       />
 
-      {/* Confetti Celebration */}
-      {showConfetti && (
-        <ReactConfetti
-          width={width}
-          height={height}
-          recycle={false}
-          numberOfPieces={400}
-          gravity={0.2}
-          colors={['#7E22CE', '#A855F7', '#D8B4FE', '#FFD700', '#FCD34D']}
-        />
-      )}
+
 
       {/* Multi Select Modal */}
       <MultiSelectModal
