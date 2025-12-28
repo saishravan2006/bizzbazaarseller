@@ -17,80 +17,12 @@ import { matchesQuery } from '@/lib/search';
 import { pageVariants, listVariants, listItemVariants, searchVariants } from '@/lib/motion';
 import { Skeleton } from '@/components/ui/skeleton';
 import LazyPromoCarousel from '@/components/LazyPromoCarousel';
-import { blinkitCategories } from '@/lib/blinkitCategories';
+import { masterCategories } from '@/lib/masterCategories';
 
 // Category ID to Section Code mapping (based on sections_items_full.json)
 // P01=Fresh Produce, P02=Grocery/Staples, P03=Dairy/Bakery/Eggs, P04=Meat/Seafood/Frozen
 // P05=Beverages, P08=Personal Care, P09=Health/OTC, P10=Baby/Kids, P11=Pet, P12=Home Care
-const categoryToSectionMap: Record<string, string> = {
-  // Food & Groceries
-  'veg': 'P01',           // Fresh Produce
-  'atta': 'P02',          // Grocery, Staples & Packaged Foods
-  'oil': 'P02',           // Oils in Grocery
-  'dairy': 'P03',         // Dairy, Bakery & Eggs (FIXED: was P04)
-  'bakery': 'P03',        // Dairy, Bakery & Eggs (FIXED: was P04)
-  'munchies': 'P02',      // Snacks in Grocery
-  'tea': 'P05',           // Beverages (Non-Alcoholic)
-  'cold-drinks': 'P05',   // Beverages
-  'instant': 'P02',       // Instant Foods in Grocery
-  'sweet': 'P02',         // Sweets in Grocery
-  'choc': 'P02',          // Chocolates in Grocery
-  'sauces': 'P02',        // Condiments in Grocery
-
-  // Personal Care & Beauty
-  'bath': 'P08',          // Personal Care, Beauty & Grooming
-  'hair': 'P08',
-  'skin': 'P08',
-  'oral': 'P08',
-  'fem': 'P08',
-  'shave': 'P08',
-  'deo': 'P08',
-  'makeup': 'P08',        // Also in Personal Care
-
-  // Home & Cleaning
-  'laundry': 'P12',       // Home Care & Cleaning (FIXED: was P20)
-  'dish': 'P12',
-  'clean': 'P12',
-  'repel': 'P12',
-  'pooja': 'P47',         // Religious, Puja & Festive
-  'shoe': 'P12',
-
-  // Baby & Kids
-  'diaper': 'P10',        // Baby, Kids & Maternity (FIXED: was P07)
-  'baby-food': 'P10',
-  'baby-skin': 'P10',
-
-  // Health & Wellness
-  'pharm': 'P09',         // Health, OTC & Pharmacy (FIXED: was P19)
-  'supp': 'P09',
-  'sex': 'P09',
-
-  // Meat & Protein
-  'meat': 'P04',          // Meat, Seafood & Frozen (FIXED: was P03)
-  'eggs': 'P03',          // Eggs are in Dairy, Bakery & Eggs
-
-  // Snacks & Branded
-  'biscuit': 'P02',
-  'noodle': 'P02',
-  'cereal': 'P02',
-  'frozen': 'P04',        // Meat, Seafood & Frozen
-  'icecream': 'P04',
-
-  // Other Essentials
-  'dry': 'P02',
-  'organic': 'P02',
-  'batteries': 'P28',     // Electricals & Lighting
-  'bulb': 'P28',
-  'stationery': 'P17',    // Stationery, Art & Office Supplies
-  'pet': 'P11',           // Pet & Veterinary (FIXED: was P27)
-
-  'spices': 'P02',
-  'paneer': 'P03',        // Dairy, Bakery & Eggs (FIXED: was P04)
-  'water': 'P05',
-  'pickle': 'P02',
-  'syrup': 'P05',
-  'energy': 'P05',
-};
+// NOTE: This mapping is no longer needed - we now use direct section codes from masterCategories
 
 // Hook for window size
 function useWindowSize() {
@@ -225,23 +157,20 @@ export const StoreType = () => {
   }, [multiSelectModal, resetToSingle]);
 
   // Handle category card click - find section and open subcategory sheet
-  const handleCategoryClick = useCallback((categoryId: string, categoryLabel: string) => {
+  // Now uses direct section codes (P01, P02, etc.) instead of category IDs
+  const handleCategoryClick = useCallback((sectionCode: string, categoryLabel: string) => {
     if (!sectionsData) return;
 
-    const sectionCode = categoryToSectionMap[categoryId];
     const section = sectionsData.sections.find(s => s.section_code === sectionCode);
-
-    // Find the category image
-    const category = blinkitCategories.find(c => c.id === categoryId);
 
     if (section) {
       setSelectedSection(section);
       setSelectedCategoryLabel(categoryLabel);
-      setSelectedCategoryImage(category?.image || '');
+      setSelectedCategoryImage(''); // No images anymore
       setIsSubcategorySheetOpen(true);
     } else {
       // Fallback: if no section found, toggle the category directly
-      const fallbackCode = `CAT_${categoryId.toUpperCase()}`;
+      const fallbackCode = `${sectionCode}.FULL`;
       toggleType(fallbackCode, categoryLabel);
     }
   }, [sectionsData, toggleType]);
