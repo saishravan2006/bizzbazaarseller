@@ -17,6 +17,105 @@ import { matchesQuery } from '@/lib/search';
 import { pageVariants, listVariants, listItemVariants, searchVariants } from '@/lib/motion';
 import { Skeleton } from '@/components/ui/skeleton';
 import LazyPromoCarousel from '@/components/LazyPromoCarousel';
+import ReactConfetti from 'react-confetti';
+import { blinkitCategories } from '@/lib/blinkitCategories';
+
+// Category ID to Section Code mapping (based on sections_items_full.json)
+// P01=Fresh Produce, P02=Grocery/Staples, P03=Dairy/Bakery/Eggs, P04=Meat/Seafood/Frozen
+// P05=Beverages, P08=Personal Care, P09=Health/OTC, P10=Baby/Kids, P11=Pet, P12=Home Care
+const categoryToSectionMap: Record<string, string> = {
+  // Food & Groceries
+  'veg': 'P01',           // Fresh Produce
+  'atta': 'P02',          // Grocery, Staples & Packaged Foods
+  'oil': 'P02',           // Oils in Grocery
+  'dairy': 'P03',         // Dairy, Bakery & Eggs (FIXED: was P04)
+  'bakery': 'P03',        // Dairy, Bakery & Eggs (FIXED: was P04)
+  'munchies': 'P02',      // Snacks in Grocery
+  'tea': 'P05',           // Beverages (Non-Alcoholic)
+  'cold-drinks': 'P05',   // Beverages
+  'instant': 'P02',       // Instant Foods in Grocery
+  'sweet': 'P02',         // Sweets in Grocery
+  'choc': 'P02',          // Chocolates in Grocery
+  'sauces': 'P02',        // Condiments in Grocery
+
+  // Personal Care & Beauty
+  'bath': 'P08',          // Personal Care, Beauty & Grooming
+  'hair': 'P08',
+  'skin': 'P08',
+  'oral': 'P08',
+  'fem': 'P08',
+  'shave': 'P08',
+  'deo': 'P08',
+  'makeup': 'P08',        // Also in Personal Care
+
+  // Home & Cleaning
+  'laundry': 'P12',       // Home Care & Cleaning (FIXED: was P20)
+  'dish': 'P12',
+  'clean': 'P12',
+  'repel': 'P12',
+  'pooja': 'P47',         // Religious, Puja & Festive
+  'shoe': 'P12',
+
+  // Baby & Kids
+  'diaper': 'P10',        // Baby, Kids & Maternity (FIXED: was P07)
+  'baby-food': 'P10',
+  'baby-skin': 'P10',
+
+  // Health & Wellness
+  'pharm': 'P09',         // Health, OTC & Pharmacy (FIXED: was P19)
+  'supp': 'P09',
+  'sex': 'P09',
+
+  // Meat & Protein
+  'meat': 'P04',          // Meat, Seafood & Frozen (FIXED: was P03)
+  'eggs': 'P03',          // Eggs are in Dairy, Bakery & Eggs
+
+  // Snacks & Branded
+  'biscuit': 'P02',
+  'noodle': 'P02',
+  'cereal': 'P02',
+  'frozen': 'P04',        // Meat, Seafood & Frozen
+  'icecream': 'P04',
+
+  // Other Essentials
+  'dry': 'P02',
+  'organic': 'P02',
+  'batteries': 'P28',     // Electricals & Lighting
+  'bulb': 'P28',
+  'stationery': 'P17',    // Stationery, Art & Office Supplies
+  'pet': 'P11',           // Pet & Veterinary (FIXED: was P27)
+
+  'spices': 'P02',
+  'paneer': 'P03',        // Dairy, Bakery & Eggs (FIXED: was P04)
+  'water': 'P05',
+  'pickle': 'P02',
+  'syrup': 'P05',
+  'energy': 'P05',
+};
+
+// Hook for window size
+function useWindowSize() {
+  const [windowSize, setWindowSize] = useState({
+    width: typeof window !== 'undefined' ? window.innerWidth : 0,
+    height: typeof window !== 'undefined' ? window.innerHeight : 0,
+  });
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return windowSize;
+}
 
 export const StoreType = () => {
   const { lang, selected, toggleType, resetToSingle, addCustomType, removeType, removeMultiple } = useStore();
@@ -39,8 +138,10 @@ export const StoreType = () => {
   const [isStubData, setIsStubData] = useState(false);
   const [retryLoading, setRetryLoading] = useState(false);
 
-  // NEW: Subcategory sheet state
+  // Subcategory sheet state
   const [selectedSection, setSelectedSection] = useState<UiSection | null>(null);
+  const [selectedCategoryLabel, setSelectedCategoryLabel] = useState<string>('');
+  const [selectedCategoryImage, setSelectedCategoryImage] = useState<string>('');
   const [isSubcategorySheetOpen, setIsSubcategorySheetOpen] = useState(false);
 
   // Updated trending suggestions to match new categories
@@ -48,6 +149,11 @@ export const StoreType = () => {
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const navigate = useNavigate();
   const shouldReduceMotion = useReducedMotion();
+
+  // Confetti state
+  const [showConfetti, setShowConfetti] = useState(false);
+  const { width, height } = useWindowSize();
+  const [isContinuing, setIsContinuing] = useState(false);
 
   const resultsGridId = 'store-type-results-grid';
 
@@ -122,17 +228,37 @@ export const StoreType = () => {
     setMultiSelectModal({ ...multiSelectModal, isOpen: false });
   }, [multiSelectModal, resetToSingle]);
 
-  // NEW: Handle category card click - open subcategory sheet
-  const handleCategoryClick = useCallback((section: UiSection) => {
-    setSelectedSection(section);
-    setIsSubcategorySheetOpen(true);
-  }, []);
+  // Handle category card click - find section and open subcategory sheet
+  const handleCategoryClick = useCallback((categoryId: string, categoryLabel: string) => {
+    if (!sectionsData) return;
+
+    const sectionCode = categoryToSectionMap[categoryId];
+    const section = sectionsData.sections.find(s => s.section_code === sectionCode);
+
+    // Find the category image
+    const category = blinkitCategories.find(c => c.id === categoryId);
+
+    if (section) {
+      setSelectedSection(section);
+      setSelectedCategoryLabel(categoryLabel);
+      setSelectedCategoryImage(category?.image || '');
+      setIsSubcategorySheetOpen(true);
+    } else {
+      // Fallback: if no section found, toggle the category directly
+      const fallbackCode = `CAT_${categoryId.toUpperCase()}`;
+      toggleType(fallbackCode, categoryLabel);
+    }
+  }, [sectionsData, toggleType]);
 
   // Handle subcategory sheet close
   const handleSubcategorySheetClose = useCallback(() => {
     setIsSubcategorySheetOpen(false);
     // Delay clearing section to allow exit animation
-    setTimeout(() => setSelectedSection(null), 300);
+    setTimeout(() => {
+      setSelectedSection(null);
+      setSelectedCategoryLabel('');
+      setSelectedCategoryImage('');
+    }, 300);
   }, []);
 
   const handleOtherSelect = useCallback(() => {
@@ -144,8 +270,17 @@ export const StoreType = () => {
   }, [addCustomType]);
 
   const handleContinue = useCallback(() => {
-    navigate('/confirm');
-  }, [navigate]);
+    if (selected.codes.length > 0) {
+      setShowConfetti(true);
+      setIsContinuing(true);
+      // Wait for confetti animation before navigating
+      setTimeout(() => {
+        navigate('/confirm');
+      }, 2500);
+    } else {
+      navigate('/confirm');
+    }
+  }, [navigate, selected.codes.length]);
 
   const handleDeselect = useCallback((index: number) => {
     if (index < selected.codes.length) {
@@ -237,14 +372,14 @@ export const StoreType = () => {
           <LazyPromoCarousel />
         </div>
 
-        {/* Search */}
+        {/* Sticky Search with Glassmorphism */}
         <motion.div
-          className="relative mb-3"
+          className="sticky top-0 z-30 pt-2 pb-2 -mx-4 px-4 bg-background/80 backdrop-blur-md border-b border-border/40 mb-4"
           variants={shouldReduceMotion ? { initial: { opacity: 1 }, focus: { opacity: 1 } } : searchVariants}
           whileFocus="focus"
           initial="initial"
         >
-          <div className="p-[2px] rounded-full bg-gradient-to-r from-primary/70 via-fuchsia-500/60 to-purple-600/60">
+          <div className="p-[2px] rounded-full bg-gradient-to-r from-primary/70 via-fuchsia-500/60 to-purple-600/60 shadow-sm">
             <div className="relative rounded-full bg-secondary shadow-[0_1px_2px_rgba(0,0,0,0.04),0_6px_16px_-8px_rgba(0,0,0,0.12)]">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5 transition-colors" />
               <Input
@@ -349,16 +484,27 @@ export const StoreType = () => {
                 </motion.div>
               ) : (
                 <motion.div
-                  className="text-center py-12"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  className="flex flex-col items-center justify-center py-16 px-4"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.2 }}
                 >
-                  <div className="w-16 h-16 bg-muted/50 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Search className="w-8 h-8 text-muted-foreground" />
+                  <div className="relative w-24 h-24 mb-6">
+                    <div className="absolute inset-0 bg-primary/10 rounded-full blur-xl animate-pulse" />
+                    <div className="relative bg-card border-2 border-dashed border-border rounded-full w-full h-full flex items-center justify-center shadow-sm">
+                      <Search className="w-10 h-10 text-muted-foreground/60" />
+                    </div>
                   </div>
-                  <p className="text-muted-foreground text-base mb-2">No results found</p>
-                  <p className="text-muted-foreground/70 text-sm">Try a different search term</p>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">No matches found</h3>
+                  <p className="text-muted-foreground text-center max-w-xs mb-6">
+                    We couldn't find any category matching "{searchTerm}".
+                  </p>
+                  <button
+                    onClick={() => setSearchTerm('')}
+                    className="px-6 py-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground rounded-full text-sm font-medium transition-colors"
+                  >
+                    Clear Search
+                  </button>
                 </motion.div>
               )}
 
@@ -388,8 +534,8 @@ export const StoreType = () => {
             >
               <CategoryHub
                 sections={sectionsData.sections}
-                selectedCodes={selected.codes}
                 onCategoryClick={handleCategoryClick}
+                selectedCodes={selected.codes}
               />
 
               {/* Other Card */}
@@ -439,9 +585,11 @@ export const StoreType = () => {
         lang={lang}
       />
 
-      {/* NEW: Subcategory Sheet - shows children when parent is clicked */}
+      {/* Subcategory Sheet - Premium redesigned */}
       <SubcategorySheet
         section={selectedSection}
+        categoryLabel={selectedCategoryLabel}
+        categoryImage={selectedCategoryImage}
         isOpen={isSubcategorySheetOpen}
         onClose={handleSubcategorySheetClose}
         selectedCodes={selected.codes}
@@ -449,6 +597,18 @@ export const StoreType = () => {
         onSelectAll={(code, label) => toggleType(code, label)}
         onDeselectAll={(codes) => removeMultiple(codes)}
       />
+
+      {/* Confetti Celebration */}
+      {showConfetti && (
+        <ReactConfetti
+          width={width}
+          height={height}
+          recycle={false}
+          numberOfPieces={400}
+          gravity={0.2}
+          colors={['#7E22CE', '#A855F7', '#D8B4FE', '#FFD700', '#FCD34D']}
+        />
+      )}
 
       {/* Multi Select Modal */}
       <MultiSelectModal

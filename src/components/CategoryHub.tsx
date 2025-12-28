@@ -1,97 +1,185 @@
 import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { resolveLucideIcon } from '@/lib/resolveLucideIcon';
-import { ChevronRight } from 'lucide-react';
+import { blinkitCategories } from '@/lib/blinkitCategories';
 import type { UiSection } from '@/lib/loadSections';
+import { Check } from 'lucide-react';
+
+// Category ID to Section Code mapping (must match StoreType.tsx)
+const categoryToSectionMap: Record<string, string> = {
+    'veg': 'P01',
+    'atta': 'P02',
+    'oil': 'P02',
+    'dairy': 'P03',
+    'bakery': 'P03',
+    'munchies': 'P02',
+    'tea': 'P05',
+    'cold-drinks': 'P05',
+    'instant': 'P02',
+    'sweet': 'P02',
+    'choc': 'P02',
+    'sauces': 'P02',
+    'bath': 'P08',
+    'hair': 'P08',
+    'skin': 'P08',
+    'oral': 'P08',
+    'fem': 'P08',
+    'shave': 'P08',
+    'deo': 'P08',
+    'makeup': 'P08',
+    'laundry': 'P12',
+    'dish': 'P12',
+    'clean': 'P12',
+    'repel': 'P12',
+    'pooja': 'P47',
+    'shoe': 'P12',
+    'diaper': 'P10',
+    'baby-food': 'P10',
+    'baby-skin': 'P10',
+    'pharm': 'P09',
+    'supp': 'P09',
+    'sex': 'P09',
+    'meat': 'P04',
+    'eggs': 'P03',
+    'biscuit': 'P02',
+    'noodle': 'P02',
+    'cereal': 'P02',
+    'frozen': 'P04',
+    'icecream': 'P04',
+    'dry': 'P02',
+    'organic': 'P02',
+    'batteries': 'P28',
+    'bulb': 'P28',
+    'stationery': 'P17',
+    'pet': 'P11',
+    'spices': 'P02',
+    'paneer': 'P03',
+    'water': 'P05',
+    'pickle': 'P02',
+    'syrup': 'P05',
+    'energy': 'P05',
+};
 
 interface CategoryHubProps {
-    sections: UiSection[];
-    selectedCodes: string[];
-    onCategoryClick: (section: UiSection) => void;
+    sections?: UiSection[];
+    onCategoryClick?: (categoryId: string, categoryLabel: string) => void;
+    selectedCodes?: string[];
 }
 
-const CategoryHub = React.memo(({ sections, selectedCodes, onCategoryClick }: CategoryHubProps) => {
-    // Calculate selection count per section
+const CategoryHub = React.memo(({ sections, onCategoryClick, selectedCodes = [] }: CategoryHubProps) => {
+
+    // Compute selection counts for each category
     const selectionCounts = useMemo(() => {
         const counts: Record<string, number> = {};
-        sections.forEach(section => {
-            const sectionItemCodes = section.items.map(item => item.code);
-            counts[section.section_code] = selectedCodes.filter(code => sectionItemCodes.includes(code)).length;
+
+        blinkitCategories.forEach(category => {
+            const sectionCode = categoryToSectionMap[category.id];
+            if (!sectionCode) {
+                counts[category.id] = 0;
+                return;
+            }
+
+            // Check if .ALL is selected for this section
+            const allCode = `${sectionCode}.ALL`;
+            if (selectedCodes.includes(allCode)) {
+                // Find section to get item count
+                const section = sections?.find(s => s.section_code === sectionCode);
+                counts[category.id] = section ? section.items.length : 999; // Show all
+                return;
+            }
+
+            // Count individual selections
+            const count = selectedCodes.filter(code => code.startsWith(`${sectionCode}.`)).length;
+            counts[category.id] = count;
         });
+
         return counts;
-    }, [sections, selectedCodes]);
+    }, [selectedCodes, sections]);
 
     return (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
-            {sections.map((section, index) => {
-                const IconComponent = resolveLucideIcon(section.icon);
-                const count = selectionCounts[section.section_code] || 0;
-                const hasSelection = count > 0;
+        <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-x-2 gap-y-6 px-2 sm:px-4 py-4">
+            {blinkitCategories.map((category, index) => {
+                const selectedCount = selectionCounts[category.id] || 0;
+                const hasSelections = selectedCount > 0;
+                const isAllSelected = selectedCodes.includes(`${categoryToSectionMap[category.id]}.ALL`);
 
                 return (
                     <motion.button
-                        key={section.section_code}
-                        onClick={() => onCategoryClick(section)}
+                        key={category.id}
+                        onClick={() => onCategoryClick?.(category.id, category.label)}
                         className={`
-              relative group p-4 sm:p-5 rounded-2xl border-2 text-left transition-all duration-200
-              ${hasSelection
-                                ? 'border-primary bg-primary/5 shadow-lg shadow-primary/10'
-                                : 'border-border bg-card hover:border-primary/30 hover:bg-primary/3'
-                            }
-              focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2
-              active:scale-[0.98] touch-manipulation
-            `}
-                        initial={{ opacity: 0, y: 20 }}
+                            flex flex-col items-center gap-2 group focus:outline-none w-full relative
+                            ${hasSelections ? 'scale-[1.02]' : ''}
+                        `}
+                        initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.02, duration: 0.3 }}
-                        whileHover={{ y: -2 }}
-                        whileTap={{ scale: 0.98 }}
+                        transition={{ delay: index * 0.01, duration: 0.3 }}
+                        whileTap={{ scale: 0.95 }}
                     >
                         {/* Selection Badge */}
-                        {hasSelection && (
+                        {hasSelections && (
                             <motion.div
-                                className="absolute -top-2 -right-2 min-w-[24px] h-6 px-2 bg-primary rounded-full flex items-center justify-center shadow-lg"
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                                initial={{ scale: 0, y: 5 }}
+                                animate={{ scale: 1, y: 0 }}
+                                className={`
+                                    absolute -top-1.5 -right-1.5 z-10 
+                                    min-w-[22px] h-[22px] px-1 
+                                    flex items-center justify-center gap-0.5
+                                    rounded-full shadow-lg
+                                    ${isAllSelected
+                                        ? 'bg-gradient-to-r from-primary to-purple-500'
+                                        : 'bg-primary'
+                                    }
+                                    text-primary-foreground text-[10px] font-bold
+                                    ring-2 ring-background
+                                `}
                             >
-                                <span className="text-xs font-bold text-primary-foreground">{count}</span>
+                                {isAllSelected ? (
+                                    <Check className="w-3 h-3" />
+                                ) : (
+                                    selectedCount
+                                )}
                             </motion.div>
                         )}
 
-                        {/* Icon Container */}
+                        {/* Image Container - Blinkit Style */}
                         <div className={`
-              w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center mb-3 transition-colors
-              ${hasSelection
-                                ? 'bg-primary/15'
-                                : 'bg-muted/50 group-hover:bg-primary/10'
+                            relative w-full aspect-square rounded-[16px] overflow-hidden 
+                            transition-all duration-300
+                            ${hasSelections
+                                ? 'bg-primary/10 ring-2 ring-primary shadow-lg shadow-primary/20'
+                                : 'bg-[#F0F6FF] group-hover:shadow-md'
                             }
-            `}>
-                            <IconComponent className={`
-                w-6 h-6 sm:w-7 sm:h-7 transition-colors
-                ${hasSelection
-                                    ? 'text-primary'
-                                    : 'text-muted-foreground group-hover:text-primary/80'
-                                }
-              `} />
+                        `}>
+                            <img
+                                src={category.image}
+                                alt={category.label}
+                                className={`
+                                    w-full h-full object-cover object-center 
+                                    scale-[1.6] group-hover:scale-[1.65] 
+                                    transition-transform duration-300 ease-out
+                                    ${hasSelections ? 'brightness-105' : ''}
+                                `}
+                                onError={(e) => {
+                                    (e.target as HTMLImageElement).src = '/placeholder.svg';
+                                    (e.target as HTMLImageElement).style.opacity = '0.3';
+                                }}
+                            />
+
+                            {/* Selected overlay glow */}
+                            {hasSelections && (
+                                <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent pointer-events-none" />
+                            )}
                         </div>
 
                         {/* Title */}
-                        <h3 className={`
-              text-sm sm:text-base font-semibold leading-tight mb-1 transition-colors line-clamp-2
-              ${hasSelection ? 'text-primary' : 'text-foreground group-hover:text-primary/90'}
-            `}>
-                            {section.section_label_en}
-                        </h3>
-
-                        {/* Subcategory count hint */}
-                        <p className="text-xs text-muted-foreground">
-                            {section.items.length} subcategories
-                        </p>
-
-                        {/* Chevron indicator */}
-                        <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <ChevronRight className="w-4 h-4 text-muted-foreground" />
+                        <div className="h-10 flex items-start justify-center overflow-hidden px-0.5 w-full">
+                            <span className={`
+                                text-[11px] sm:text-[12px] leading-[1.15] text-center font-semibold w-full break-words
+                                transition-colors duration-200
+                                ${hasSelections ? 'text-primary' : 'text-[#1c1c1c]'}
+                            `}>
+                                {category.label}
+                            </span>
                         </div>
                     </motion.button>
                 );
