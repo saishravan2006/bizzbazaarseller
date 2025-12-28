@@ -2,5 +2,11 @@
     "$schema": "https://openapi.vercel.sh/vercel.json",
     "buildCommand": "npm ci && npm run build",
     "installCommand": "npm ci",
-    "framework": "vite"
+    "framework": "vite",
+    "rewrites": [
+        {
+            "source": "/((?!api|category-images|category-images-optimized|assets|.*\\..*).*)",
+            "destination": "/"
+        }
+    ]
 }
