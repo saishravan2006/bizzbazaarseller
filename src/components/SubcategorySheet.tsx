@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Check, ArrowLeft, CheckCheck, Sparkles, Search, ChevronRight } from 'lucide-react';
 import { resolveLucideIcon } from '@/lib/resolveLucideIcon';
@@ -16,6 +16,19 @@ interface SubcategorySheetProps {
     onDeselectAll?: (codes: string[]) => void;
 }
 
+// Fast, smooth tween animation (no spring bounce = no jerk)
+const sheetTransition = {
+    type: "tween" as const,
+    duration: 0.2,
+    ease: [0.32, 0.72, 0, 1], // iOS-like ease
+};
+
+// Quick backdrop fade
+const backdropTransition = {
+    duration: 0.15,
+    ease: "easeOut"
+};
+
 const SubcategorySheet = React.memo(({
     section,
     categoryLabel,
@@ -28,6 +41,19 @@ const SubcategorySheet = React.memo(({
     onDeselectAll
 }: SubcategorySheetProps) => {
     const [searchQuery, setSearchQuery] = useState('');
+    const [hasAnimatedIn, setHasAnimatedIn] = useState(false);
+
+    // Reset animation state when sheet closes
+    useEffect(() => {
+        if (!isOpen) {
+            setHasAnimatedIn(false);
+            setSearchQuery('');
+        } else {
+            // Delay setting animated to prevent re-animation
+            const timer = setTimeout(() => setHasAnimatedIn(true), 400);
+            return () => clearTimeout(timer);
+        }
+    }, [isOpen]);
 
     // Generate the ALL code for this section (e.g., "P02.ALL")
     const allCode = section ? `${section.section_code}.ALL` : '';
@@ -54,11 +80,8 @@ const SubcategorySheet = React.memo(({
     }, [section, searchQuery]);
 
     const handleItemClick = useCallback((item: UiItem) => {
-        // If ALL is currently selected and user clicks an individual item, 
-        // we need to deselect ALL first and select all except the clicked one
         if (isAllSelected && onDeselectAll && section) {
             onDeselectAll([allCode]);
-            // Select all items except the one clicked
             section.items.forEach(i => {
                 if (i.code !== item.code) {
                     onToggle(i.code, i.label_en);
@@ -73,26 +96,21 @@ const SubcategorySheet = React.memo(({
         if (!section) return;
 
         if (isAllSelected) {
-            // Deselect ALL
             if (onDeselectAll) {
                 onDeselectAll([allCode]);
             }
         } else {
-            // If individual items are selected, first deselect them
             if (selectedItemCodes.length > 0 && onDeselectAll) {
                 onDeselectAll(selectedItemCodes);
             }
-            // Select ALL using the special .ALL code
             if (onSelectAll) {
                 onSelectAll(allCode, `${section.section_label_en} (All)`, section.items.map(i => i.code));
             } else {
-                // Fallback: just toggle the ALL code
                 onToggle(allCode, `${section.section_label_en} (All)`);
             }
         }
     }, [section, isAllSelected, allCode, onSelectAll, onDeselectAll, selectedItemCodes, onToggle]);
 
-    // Determine if an item is selected (either individually or via ALL)
     const isItemSelected = useCallback((itemCode: string) => {
         return isAllSelected || selectedCodes.includes(itemCode);
     }, [isAllSelected, selectedCodes]);
@@ -101,32 +119,33 @@ const SubcategorySheet = React.memo(({
     const displayImage = categoryImage;
 
     return (
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
             {isOpen && section && (
                 <>
-                    {/* Premium Backdrop with blur */}
+                    {/* Smooth Backdrop */}
                     <motion.div
-                        className="fixed inset-0 bg-black/50 backdrop-blur-md z-40"
+                        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
+                        transition={backdropTransition}
                         onClick={onClose}
                     />
 
-                    {/* Sheet Container */}
+                    {/* Sheet Container - Fast & Smooth */}
                     <motion.div
                         className="fixed inset-x-0 bottom-0 z-50 max-h-[92vh] flex flex-col"
                         initial={{ y: '100%' }}
                         animate={{ y: 0 }}
                         exit={{ y: '100%' }}
-                        transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+                        transition={sheetTransition}
                     >
                         {/* Glassmorphic Sheet */}
-                        <div className="bg-gradient-to-b from-background via-background to-background/95 rounded-t-[28px] shadow-2xl flex flex-col overflow-hidden border-t border-x border-border/30">
+                        <div className="bg-gradient-to-b from-background via-background to-background/98 rounded-t-[28px] shadow-2xl flex flex-col overflow-hidden border-t border-x border-border/30">
 
                             {/* Handle Bar */}
                             <div className="flex justify-center pt-3 pb-2">
-                                <div className="w-10 h-1 bg-muted-foreground/20 rounded-full" />
+                                <div className="w-10 h-1 bg-muted-foreground/30 rounded-full" />
                             </div>
 
                             {/* Premium Header */}
@@ -145,12 +164,7 @@ const SubcategorySheet = React.memo(({
                                         {/* Category Image & Title */}
                                         <div className="flex items-center gap-3">
                                             {displayImage && (
-                                                <motion.div
-                                                    className="relative w-14 h-14 rounded-2xl overflow-hidden shadow-lg bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20"
-                                                    initial={{ scale: 0.8, opacity: 0 }}
-                                                    animate={{ scale: 1, opacity: 1 }}
-                                                    transition={{ delay: 0.1 }}
-                                                >
+                                                <div className="relative w-14 h-14 rounded-2xl overflow-hidden shadow-lg bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20">
                                                     <img
                                                         src={displayImage}
                                                         alt={displayLabel}
@@ -159,9 +173,8 @@ const SubcategorySheet = React.memo(({
                                                             e.currentTarget.style.display = 'none';
                                                         }}
                                                     />
-                                                    {/* Shine effect */}
                                                     <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/20 to-white/0 pointer-events-none" />
-                                                </motion.div>
+                                                </div>
                                             )}
                                             <div>
                                                 <h2 className="text-xl font-bold text-foreground leading-tight">
@@ -198,14 +211,9 @@ const SubcategorySheet = React.memo(({
                                     </motion.button>
                                 </div>
 
-                                {/* Search Bar */}
+                                {/* Search Bar - No stagger animation */}
                                 {section.items.length > 5 && (
-                                    <motion.div
-                                        className="mt-4 relative"
-                                        initial={{ opacity: 0, y: -10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.15 }}
-                                    >
+                                    <div className="mt-4 relative">
                                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                                         <input
                                             type="text"
@@ -222,7 +230,7 @@ const SubcategorySheet = React.memo(({
                                                 <X className="w-3.5 h-3.5 text-muted-foreground" />
                                             </button>
                                         )}
-                                    </motion.div>
+                                    </div>
                                 )}
                             </div>
 
@@ -232,8 +240,8 @@ const SubcategorySheet = React.memo(({
                             {/* Scrollable Content */}
                             <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-3">
 
-                                {/* SELECT ALL - Premium Card */}
-                                <motion.button
+                                {/* SELECT ALL - Premium Card (no animation on rerender) */}
+                                <button
                                     onClick={handleSelectAll}
                                     className={`
                                         relative w-full p-4 rounded-2xl border-2 text-left transition-all overflow-hidden
@@ -243,9 +251,6 @@ const SubcategorySheet = React.memo(({
                                         }
                                         focus:outline-none active:scale-[0.99] touch-manipulation
                                     `}
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    whileTap={{ scale: 0.99 }}
                                 >
                                     {/* Background Pattern */}
                                     <div className="absolute inset-0 opacity-5">
@@ -254,29 +259,18 @@ const SubcategorySheet = React.memo(({
                                     </div>
 
                                     <div className="relative flex items-center gap-4">
-                                        {/* Checkbox with animation */}
-                                        <motion.div
-                                            className={`
-                                                flex-shrink-0 w-7 h-7 rounded-lg border-2 flex items-center justify-center transition-all
-                                                ${isAllSelected
-                                                    ? 'border-primary bg-primary shadow-lg shadow-primary/30'
-                                                    : 'border-primary/40 bg-primary/5'
-                                                }
-                                            `}
-                                            animate={isAllSelected ? { scale: [1, 1.1, 1] } : {}}
-                                        >
-                                            <AnimatePresence>
-                                                {isAllSelected && (
-                                                    <motion.div
-                                                        initial={{ scale: 0, rotate: -45 }}
-                                                        animate={{ scale: 1, rotate: 0 }}
-                                                        exit={{ scale: 0 }}
-                                                    >
-                                                        <CheckCheck className="w-4 h-4 text-primary-foreground" />
-                                                    </motion.div>
-                                                )}
-                                            </AnimatePresence>
-                                        </motion.div>
+                                        {/* Checkbox */}
+                                        <div className={`
+                                            flex-shrink-0 w-7 h-7 rounded-lg border-2 flex items-center justify-center transition-all duration-200
+                                            ${isAllSelected
+                                                ? 'border-primary bg-primary shadow-lg shadow-primary/30'
+                                                : 'border-primary/40 bg-primary/5'
+                                            }
+                                        `}>
+                                            {isAllSelected && (
+                                                <CheckCheck className="w-4 h-4 text-primary-foreground" />
+                                            )}
+                                        </div>
 
                                         {/* Icon */}
                                         <div className={`
@@ -298,7 +292,7 @@ const SubcategorySheet = React.memo(({
 
                                         <ChevronRight className={`w-5 h-5 ${isAllSelected ? 'text-primary' : 'text-muted-foreground'}`} />
                                     </div>
-                                </motion.button>
+                                </button>
 
                                 {/* Divider */}
                                 <div className="flex items-center gap-3 py-1">
@@ -309,20 +303,21 @@ const SubcategorySheet = React.memo(({
                                     <div className="flex-1 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
                                 </div>
 
-                                {/* Individual Items - Staggered Grid */}
+                                {/* Individual Items - CSS transitions only (no framer animations on each item) */}
                                 <div className="grid gap-2">
                                     {filteredItems.map((item, index) => {
                                         const IconComponent = resolveLucideIcon(item.icon);
                                         const isSelected = isItemSelected(item.code);
-                                        // Clean up label
                                         const cleanLabel = item.label_en.replace(/\r/g, '').trim();
 
                                         return (
-                                            <motion.button
+                                            <button
                                                 key={item.code}
                                                 onClick={() => handleItemClick(item)}
+                                                disabled={isAllSelected}
                                                 className={`
-                                                    flex items-center gap-4 w-full p-4 rounded-xl border text-left transition-all
+                                                    flex items-center gap-4 w-full p-4 rounded-xl border text-left
+                                                    transition-all duration-200 ease-out
                                                     ${isSelected
                                                         ? 'border-primary bg-gradient-to-r from-primary/10 to-primary/5 shadow-md'
                                                         : 'border-border/50 bg-card hover:bg-muted/50 hover:border-border'
@@ -330,65 +325,51 @@ const SubcategorySheet = React.memo(({
                                                     ${isAllSelected ? 'opacity-50 pointer-events-none' : ''}
                                                     focus:outline-none active:scale-[0.99] touch-manipulation
                                                 `}
-                                                initial={{ opacity: 0, x: -15 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                transition={{ delay: Math.min(index * 0.03, 0.3) }}
-                                                whileTap={{ scale: 0.99 }}
-                                                disabled={isAllSelected}
+                                                style={{
+                                                    // CSS stagger animation on initial load only
+                                                    animationDelay: hasAnimatedIn ? '0ms' : `${Math.min(index * 20, 200)}ms`,
+                                                }}
                                             >
                                                 {/* Checkbox */}
-                                                <motion.div
-                                                    className={`
-                                                        flex-shrink-0 w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all
-                                                        ${isSelected
-                                                            ? 'border-primary bg-primary shadow-sm shadow-primary/20'
-                                                            : 'border-muted-foreground/20 bg-transparent'
-                                                        }
-                                                    `}
-                                                >
-                                                    <AnimatePresence>
-                                                        {isSelected && (
-                                                            <motion.div
-                                                                initial={{ scale: 0 }}
-                                                                animate={{ scale: 1 }}
-                                                                exit={{ scale: 0 }}
-                                                            >
-                                                                <Check className="w-3.5 h-3.5 text-primary-foreground" />
-                                                            </motion.div>
-                                                        )}
-                                                    </AnimatePresence>
-                                                </motion.div>
+                                                <div className={`
+                                                    flex-shrink-0 w-6 h-6 rounded-lg border-2 flex items-center justify-center
+                                                    transition-all duration-200
+                                                    ${isSelected
+                                                        ? 'border-primary bg-primary shadow-sm shadow-primary/20'
+                                                        : 'border-muted-foreground/20 bg-transparent'
+                                                    }
+                                                `}>
+                                                    {isSelected && (
+                                                        <Check className="w-3.5 h-3.5 text-primary-foreground" />
+                                                    )}
+                                                </div>
 
                                                 {/* Icon */}
                                                 <div className={`
-                                                    flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-colors
+                                                    flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-colors duration-200
                                                     ${isSelected ? 'bg-primary/15' : 'bg-muted'}
                                                 `}>
                                                     <IconComponent className={`
-                                                        w-5 h-5 transition-colors
+                                                        w-5 h-5 transition-colors duration-200
                                                         ${isSelected ? 'text-primary' : 'text-muted-foreground'}
                                                     `} />
                                                 </div>
 
                                                 {/* Label */}
                                                 <span className={`
-                                                    flex-1 font-medium text-sm transition-colors line-clamp-2
+                                                    flex-1 font-medium text-sm transition-colors duration-200 line-clamp-2
                                                     ${isSelected ? 'text-primary' : 'text-foreground'}
                                                 `}>
                                                     {cleanLabel}
                                                 </span>
-                                            </motion.button>
+                                            </button>
                                         );
                                     })}
                                 </div>
 
                                 {/* No Results */}
                                 {filteredItems.length === 0 && searchQuery && (
-                                    <motion.div
-                                        className="flex flex-col items-center justify-center py-12 text-center"
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                    >
+                                    <div className="flex flex-col items-center justify-center py-12 text-center">
                                         <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
                                             <Search className="w-7 h-7 text-muted-foreground" />
                                         </div>
@@ -399,7 +380,7 @@ const SubcategorySheet = React.memo(({
                                         >
                                             Clear search
                                         </button>
-                                    </motion.div>
+                                    </div>
                                 )}
                             </div>
 
@@ -408,14 +389,14 @@ const SubcategorySheet = React.memo(({
                                 <motion.button
                                     onClick={onClose}
                                     className={`
-                                        w-full py-4 rounded-2xl font-bold text-base transition-all
+                                        w-full py-4 rounded-2xl font-bold text-base transition-all duration-200
                                         ${selectedInSection > 0 || isAllSelected
                                             ? 'bg-gradient-to-r from-primary via-primary to-primary/90 text-primary-foreground shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40'
                                             : 'bg-muted text-muted-foreground hover:bg-muted/80'
                                         }
                                         focus:outline-none active:scale-[0.99]
                                     `}
-                                    whileTap={{ scale: 0.99 }}
+                                    whileTap={{ scale: 0.98 }}
                                 >
                                     <span className="flex items-center justify-center gap-2">
                                         {isAllSelected ? (
