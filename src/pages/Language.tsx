@@ -1,11 +1,12 @@
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import { useStore } from '@/store/useStore';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { t } from '@/lib/i18n';
 import LanguageCard from '@/components/LanguageCard';
-import SlideInButton from '@/components/SlideInButton';
+import { PageTransition, StaggerContainer, StaggerItem } from '@/components/PageTransition';
+import { PremiumButton, StickyFooter } from '@/components/PremiumButton';
+import { ArrowRight, Globe } from 'lucide-react';
 
 const languages = [
   { code: 'en' as const, label: 'English', nativeLabel: 'English' },
@@ -28,68 +29,110 @@ export const Language = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex flex-col items-center justify-center px-6 py-12">
-      {/* Ambient background elements */}
-      <div 
-        className="absolute inset-0 -z-10"
-        style={{
-          background: `
-            radial-gradient(circle at 20% 20%, hsl(266 64% 45% / 0.03) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, hsl(145 63% 42% / 0.02) 0%, transparent 50%)
-          `
-        }}
-      />
-
-      {/* Header */}
+    <PageTransition className="bg-gradient-to-br from-background via-background to-muted/20 flex flex-col">
+      {/* Animated ambient background */}
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="text-center mb-8"
+        className="absolute inset-0 -z-10 overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
       >
-        <h1 className="font-title font-semibold text-3xl text-foreground mb-2">
-          Bizz Bazaar
-        </h1>
-        <p className="text-muted-foreground text-lg">
-          Welcome! Let's get started
-        </p>
-      </motion.div>
-
-      {/* Language Selection Card */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="w-full max-w-md"
-      >
-        <LanguageCard
-          title="Choose Language"
-          subtitle="Select your preferred language to continue"
-          languages={languages}
-          onLanguageSelect={handleLanguageSelect}
-          selectedLanguage={selectedLang}
+        {/* Floating orbs */}
+        <motion.div
+          className="absolute w-96 h-96 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, hsl(266 64% 45% / 0.08) 0%, transparent 70%)',
+            left: '10%',
+            top: '10%',
+          }}
+          animate={{
+            x: [0, 30, 0],
+            y: [0, -20, 0],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+        <motion.div
+          className="absolute w-72 h-72 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, hsl(145 63% 42% / 0.06) 0%, transparent 70%)',
+            right: '5%',
+            bottom: '20%',
+          }}
+          animate={{
+            x: [0, -30, 0],
+            y: [0, 20, 0],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
         />
       </motion.div>
 
-      {/* Continue Button */}
+      <div className="flex-1 flex flex-col items-center justify-center px-6 py-12 pb-32">
+        <StaggerContainer className="flex flex-col items-center w-full max-w-md">
+          {/* Header with icon */}
+          <StaggerItem className="text-center mb-8">
+            <motion.div
+              className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-primary/10 flex items-center justify-center"
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.2 }}
+            >
+              <Globe className="w-8 h-8 text-primary" />
+            </motion.div>
+            <motion.h1
+              className="font-title font-semibold text-3xl text-foreground mb-2"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              Bizz Bazaar
+            </motion.h1>
+            <motion.p
+              className="text-muted-foreground text-lg"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+            >
+              Welcome! Let's get started
+            </motion.p>
+          </StaggerItem>
+
+          {/* Language Selection Card */}
+          <StaggerItem className="w-full">
+            <LanguageCard
+              title="Choose Language"
+              subtitle="Select your preferred language to continue"
+              languages={languages}
+              onLanguageSelect={handleLanguageSelect}
+              selectedLanguage={selectedLang}
+            />
+          </StaggerItem>
+        </StaggerContainer>
+      </div>
+
+      {/* Sticky Footer with Premium Button */}
       {selectedLang && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.1 }}
-          className="mt-8"
-        >
-          <SlideInButton
-            buttonText={t('continue', selectedLang)}
-            defaultBackgroundColor="hsl(266 64% 45%)"
-            defaultTextColor="white"
-            hoverBackgroundColor="hsl(266 64% 40%)"
-            hoverTextColor="white"
+        <StickyFooter>
+          <PremiumButton
             onClick={handleContinue}
-            className="shadow-lg shadow-primary/20 hover:shadow-primary/30 focus-visible:ring-primary"
-          />
-        </motion.div>
+            variant="primary"
+            size="lg"
+            fullWidth
+            pulse
+            icon={<ArrowRight className="w-5 h-5" />}
+            iconPosition="right"
+          >
+            {t('continue', selectedLang)}
+          </PremiumButton>
+        </StickyFooter>
       )}
-    </div>
+    </PageTransition>
   );
 };
