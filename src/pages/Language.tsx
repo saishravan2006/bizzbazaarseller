@@ -7,6 +7,7 @@ import LanguageCard from '@/components/LanguageCard';
 import { PageTransition, StaggerContainer, StaggerItem } from '@/components/PageTransition';
 import { PremiumButton, StickyFooter } from '@/components/PremiumButton';
 import { ArrowRight, Globe } from 'lucide-react';
+import AnimatedGradientBackground from '@/components/AnimatedGradientBackground';
 
 const languages = [
   { code: 'en' as const, label: 'English', nativeLabel: 'English' },
@@ -29,50 +30,13 @@ export const Language = () => {
   };
 
   return (
-    <PageTransition className="bg-gradient-to-br from-background via-background to-muted/20 flex flex-col">
-      {/* Animated ambient background */}
-      <motion.div
-        className="absolute inset-0 -z-10 overflow-hidden"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-      >
-        {/* Floating orbs */}
-        <motion.div
-          className="absolute w-96 h-96 rounded-full"
-          style={{
-            background: 'radial-gradient(circle, hsl(266 64% 45% / 0.08) 0%, transparent 70%)',
-            left: '10%',
-            top: '10%',
-          }}
-          animate={{
-            x: [0, 30, 0],
-            y: [0, -20, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
-        <motion.div
-          className="absolute w-72 h-72 rounded-full"
-          style={{
-            background: 'radial-gradient(circle, hsl(145 63% 42% / 0.06) 0%, transparent 70%)',
-            right: '5%',
-            bottom: '20%',
-          }}
-          animate={{
-            x: [0, -30, 0],
-            y: [0, 20, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
-      </motion.div>
+    <PageTransition className="relative flex flex-col overflow-hidden">
+      {/* Premium Aurora Gradient Background */}
+      <AnimatedGradientBackground
+        variant="aurora"
+        intensity="subtle"
+        interactive={true}
+      />
 
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-12 pb-32">
         <StaggerContainer className="flex flex-col items-center w-full max-w-md">
