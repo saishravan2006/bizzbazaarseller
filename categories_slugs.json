@@ -1,0 +1,210 @@
+[
+  {
+    "label": "Fresh Produce",
+    "slug": "FRESH_PRODUCE"
+  },
+  {
+    "label": "Grocery, Staples & Packaged Foods",
+    "slug": "GROCERY_STAPLES_AND_PACKAGED_FOODS"
+  },
+  {
+    "label": "Dairy, Bakery & Eggs",
+    "slug": "DAIRY_BAKERY_AND_EGGS"
+  },
+  {
+    "label": "Meat, Seafood & Frozen",
+    "slug": "MEAT_SEAFOOD_AND_FROZEN"
+  },
+  {
+    "label": "Beverages (Non-Alcoholic)",
+    "slug": "BEVERAGES"
+  },
+  {
+    "label": "Alcoholic Beverages (State-Regulated)",
+    "slug": "ALCOHOLIC_BEVERAGES"
+  },
+  {
+    "label": "Tobacco & Smoking (State-Regulated, 18+)",
+    "slug": "TOBACCO_AND_SMOKING"
+  },
+  {
+    "label": "Personal Care, Beauty & Grooming",
+    "slug": "PERSONAL_CARE_BEAUTY_AND_GROOMING"
+  },
+  {
+    "label": "Health, OTC & Pharmacy (India)",
+    "slug": "HEALTH_OTC_AND_PHARMACY"
+  },
+  {
+    "label": "Baby, Kids & Maternity (India)",
+    "slug": "BABY_KIDS_AND_MATERNITY"
+  },
+  {
+    "label": "Pet & Veterinary (India)",
+    "slug": "PET_AND_VETERINARY"
+  },
+  {
+    "label": "Home Care & Cleaning (India)",
+    "slug": "HOME_CARE_AND_CLEANING"
+  },
+  {
+    "label": "Kitchenware, Cookware & Dining (India)",
+    "slug": "KITCHENWARE_COOKWARE_AND_DINING"
+  },
+  {
+    "label": "Home & Living (Furnishings & Decor) - India",
+    "slug": "HOME_AND_LIVING_INDIA"
+  },
+  {
+    "label": "Furniture & Mattresses (India)",
+    "slug": "FURNITURE_AND_MATTRESSES"
+  },
+  {
+    "label": "Event, Wedding & Decor (India)",
+    "slug": "EVENT_WEDDING_AND_DECOR"
+  },
+  {
+    "label": "Stationery, Art & Office Supplies (India)",
+    "slug": "STATIONERY_ART_AND_OFFICE_SUPPLIES"
+  },
+  {
+    "label": "Books, Media & Hobbies (India)",
+    "slug": "BOOKS_MEDIA_AND_HOBBIES"
+  },
+  {
+    "label": "Toys, Kids Hobbies & Party (India)",
+    "slug": "TOYS_KIDS_HOBBIES_AND_PARTY"
+  },
+  {
+    "label": "Sports, Fitness & Outdoors (India)",
+    "slug": "SPORTS_FITNESS_AND_OUTDOORS"
+  },
+  {
+    "label": "Musical Instruments & Pro Audio (India)",
+    "slug": "MUSICAL_INSTRUMENTS_AND_PRO_AUDIO"
+  },
+  {
+    "label": "Mobiles, Computers & Accessories (India)",
+    "slug": "MOBILES_COMPUTERS_AND_ACCESSORIES"
+  },
+  {
+    "label": "Consumer Electronics & Entertainment (India)",
+    "slug": "CONSUMER_ELECTRONICS_AND_ENTERTAINMENT"
+  },
+  {
+    "label": "Cameras & Surveillance Drones (India)",
+    "slug": "CAMERAS_AND_SURVEILLANCE_DRONES"
+  },
+  {
+    "label": "Smart Home & IoT (India)",
+    "slug": "SMART_HOME_AND_IOT"
+  },
+  {
+    "label": "Large Appliances (India)",
+    "slug": "LARGE_APPLIANCES"
+  },
+  {
+    "label": "Electricals & Lighting (India)",
+    "slug": "ELECTRICALS_AND_LIGHTING"
+  },
+  {
+    "label": "Power Backup, Solar & Energy (India)",
+    "slug": "POWER_BACKUP_SOLAR_AND_ENERGY"
+  },
+  {
+    "label": "Tools, Hardware & Home Improvement (India)",
+    "slug": "TOOLS_HARDWARE_AND_HOME_IMPROVEMENT"
+  },
+  {
+    "label": "Building & Construction Materials (India)",
+    "slug": "BUILDING_AND_CONSTRUCTION_MATERIALS"
+  },
+  {
+    "label": "Paints, Chemicals & Surface Care (India)",
+    "slug": "PAINTS_CHEMICALS_AND_SURFACE_CARE"
+  },
+  {
+    "label": "Industrial, MRO & Safety (India)",
+    "slug": "INDUSTRIAL_MRO_AND_SAFETY"
+  },
+  {
+    "label": "Packaging, Printing & Signage (India)",
+    "slug": "PACKAGING_PRINTING_AND_SIGNAGE_EXTENDED"
+  },
+  {
+    "label": "Raw Materials & Commodities (B2B, India)",
+    "slug": "RAW_MATERIALS_AND_COMMODITIES"
+  },
+  {
+    "label": "Automotive & Two-Wheelers (India)",
+    "slug": "AUTOMOTIVE_AND_TWO_WHEELERS"
+  },
+  {
+    "label": "EV & e-Mobility (Personal, India)",
+    "slug": "EV_AND_E_MOBILITY"
+  },
+  {
+    "label": "Luggage, Travel & Outdoor Gear (India)",
+    "slug": "LUGGAGE_TRAVEL_AND_OUTDOOR_GEAR"
+  },
+  {
+    "label": "Watches, Jewellery & Precious (India)",
+    "slug": "WATCHES_JEWELLERY_AND_PRECIOUS"
+  },
+  {
+    "label": "Fashion - Men (India)",
+    "slug": "FASHION_MEN"
+  },
+  {
+    "label": "Fashion - Women (India)",
+    "slug": "FASHION_WOMEN"
+  },
+  {
+    "label": "Fashion - Kids & Infants (India)",
+    "slug": "FASHION_KIDS_AND_INFANTS"
+  },
+  {
+    "label": "Footwear (India)",
+    "slug": "FOOTWEAR"
+  },
+  {
+    "label": "Apparel Materials, Tailoring & Accessories (India)",
+    "slug": "APPAREL_MATERIALS_TAILORING_AND_ACCESSORIES"
+  },
+  {
+    "label": "Religious, Puja & Festive (India)",
+    "slug": "RELIGIOUS_PUJA_AND_FESTIVE"
+  },
+  {
+    "label": "Handloom, Handicrafts & Ethnic Specialties (India)",
+    "slug": "HANDLOOM_HANDICRAFTS_AND_ETHNIC_SPECIALTIES"
+  },
+  {
+    "label": "Medical & Hospital Equipment (India)",
+    "slug": "MEDICAL_AND_HOSPITAL_EQUIPMENT"
+  },
+  {
+    "label": "Education, Lab & Scientific (India)",
+    "slug": "EDUCATION_LAB_AND_SCIENTIFIC"
+  },
+  {
+    "label": "Agriculture, Gardening & Irrigation (India)",
+    "slug": "AGRICULTURE_GARDENING_AND_IRRIGATION"
+  },
+  {
+    "label": "Digital Goods & Gift Cards (India)",
+    "slug": "DIGITAL_GOODS_AND_GIFT_CARDS"
+  },
+  {
+    "label": "Winter & Seasonal Utilities (India)",
+    "slug": "WINTER_AND_SEASONAL_UTILITIES"
+  },
+  {
+    "label": "Household Services Consumables (India)",
+    "slug": "HOUSEHOLD_SERVICES_CONSUMABLES"
+  },
+  {
+    "label": "Safety, Security & Surveillance (India)",
+    "slug": "SAFETY_SECURITY_AND_SURVEILLANCE"
+  }
+]
